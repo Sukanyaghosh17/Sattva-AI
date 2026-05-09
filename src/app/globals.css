@@ -1,26 +1,225 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --primary: #020202;
+  --mocha: #503B31;
+  --taupe: #705D56;
+  --lavender: #9097C0;
+  --powder: #A7BBEC;
+  --sidebar-width: 280px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html, body {
+  height: 100%;
+  overflow: hidden;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--primary);
+  color: #e8e8e8;
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--taupe);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--lavender);
+}
+
+/* Glassmorphism utilities */
+.glass {
+  background: rgba(80, 59, 49, 0.12);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(160, 140, 130, 0.15);
+}
+
+.glass-dark {
+  background: rgba(2, 2, 2, 0.7);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(112, 93, 86, 0.2);
+}
+
+.glass-card {
+  background: rgba(80, 59, 49, 0.18);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(167, 187, 236, 0.12);
+  border-radius: 1.25rem;
+}
+
+/* Glow effects */
+.glow-powder {
+  box-shadow: 0 0 20px rgba(167, 187, 236, 0.15), 0 0 40px rgba(144, 151, 192, 0.08);
+}
+
+.glow-powder-strong {
+  box-shadow: 0 0 30px rgba(167, 187, 236, 0.3), 0 0 60px rgba(144, 151, 192, 0.15);
+}
+
+.glow-mocha {
+  box-shadow: 0 0 20px rgba(80, 59, 49, 0.4), 0 0 40px rgba(80, 59, 49, 0.2);
+}
+
+/* Text gradients */
+.text-gradient {
+  background: linear-gradient(135deg, var(--powder) 0%, var(--lavender) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-warm {
+  background: linear-gradient(135deg, #e8d5cc 0%, var(--powder) 50%, var(--lavender) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Typing animation */
+.typing-dot:nth-child(1) { animation: typingDot 1.4s ease-in-out infinite 0s; }
+.typing-dot:nth-child(2) { animation: typingDot 1.4s ease-in-out infinite 0.2s; }
+.typing-dot:nth-child(3) { animation: typingDot 1.4s ease-in-out infinite 0.4s; }
+
+@keyframes typingDot {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-8px); opacity: 1; }
+}
+
+/* Shimmer skeleton */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(112, 93, 86, 0.2) 0%,
+    rgba(167, 187, 236, 0.12) 50%,
+    rgba(112, 93, 86, 0.2) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Logo glow animation */
+.logo-glow {
+  animation: logoGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes logoGlow {
+  0% {
+    filter: drop-shadow(0 0 6px rgba(167, 187, 236, 0.4)) drop-shadow(0 0 12px rgba(144, 151, 192, 0.2));
+  }
+  100% {
+    filter: drop-shadow(0 0 16px rgba(167, 187, 236, 0.8)) drop-shadow(0 0 32px rgba(144, 151, 192, 0.4));
+  }
+}
+
+/* Message fade-in-up */
+.message-enter {
+  animation: messageEnter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes messageEnter {
+  0% { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Input focus ring */
+.input-focus-ring:focus-within {
+  border-color: rgba(167, 187, 236, 0.5);
+  box-shadow: 0 0 0 3px rgba(167, 187, 236, 0.1), 0 0 20px rgba(167, 187, 236, 0.1);
+}
+
+/* Sidebar active state */
+.sidebar-item-active {
+  background: linear-gradient(135deg, rgba(167, 187, 236, 0.15) 0%, rgba(144, 151, 192, 0.1) 100%);
+  border-left: 2px solid var(--powder);
+}
+
+/* Mood badge */
+.mood-badge {
+  background: linear-gradient(135deg, rgba(167, 187, 236, 0.2), rgba(144, 151, 192, 0.15));
+  border: 1px solid rgba(167, 187, 236, 0.3);
+}
+
+/* Markdown styles inside chat */
+.prose-chat {
+  color: #e2e2e2;
+  line-height: 1.7;
+}
+.prose-chat h1, .prose-chat h2, .prose-chat h3 {
+  color: var(--powder);
+  font-family: 'Outfit', sans-serif;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+.prose-chat p { margin-bottom: 0.75rem; }
+.prose-chat ul, .prose-chat ol { padding-left: 1.25rem; margin-bottom: 0.75rem; }
+.prose-chat li { margin-bottom: 0.25rem; }
+.prose-chat code {
+  background: rgba(144, 151, 192, 0.15);
+  color: var(--powder);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+  font-size: 0.875em;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+.prose-chat pre {
+  background: rgba(2, 2, 2, 0.6);
+  border: 1px solid rgba(112, 93, 86, 0.3);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 0.75rem;
+}
+.prose-chat pre code {
+  background: transparent;
+  padding: 0;
+  color: #c9d1e0;
+}
+.prose-chat blockquote {
+  border-left: 3px solid var(--lavender);
+  padding-left: 1rem;
+  color: #aaa;
+  font-style: italic;
+  margin-bottom: 0.75rem;
+}
+.prose-chat strong { color: var(--powder); }
+.prose-chat a { color: var(--lavender); text-decoration: underline; }
+.prose-chat a:hover { color: var(--powder); }
+
+/* Sidebar collapse transition */
+.sidebar {
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Mood ring colors */
+.mood-happy { background: linear-gradient(135deg, #ffd89b, #19547b); }
+.mood-calm { background: linear-gradient(135deg, #a8edea, #fed6e3); }
+.mood-anxious { background: linear-gradient(135deg, #fc4a1a, #f7b733); }
+.mood-sad { background: linear-gradient(135deg, #4568dc, #b06ab3); }
+.mood-neutral { background: linear-gradient(135deg, #667eea, #764ba2); }
