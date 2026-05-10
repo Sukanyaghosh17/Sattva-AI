@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useChatStore } from "@/store/chatStore";
 import Sidebar from "@/components/Sidebar";
@@ -10,9 +9,9 @@ import MoodTracker from "@/components/MoodTracker";
 import Journal from "@/components/Journal";
 import Meditation from "@/components/Meditation";
 import Analytics from "@/components/Analytics";
+import HomePage from "@/components/HomePage";
 
 const VIEW_COMPONENTS = {
-  chat: ChatArea,
   mood: MoodTracker,
   journal: Journal,
   meditate: Meditation,
@@ -20,38 +19,13 @@ const VIEW_COMPONENTS = {
 };
 
 export default function Home() {
-  const { activeView, sidebarOpen } = useChatStore();
+  const { activeView, activeSessionId, sidebarOpen } = useChatStore();
 
-  const ActiveComponent = VIEW_COMPONENTS[activeView];
-
-  // Ambient background particles
-  const particles = Array.from({ length: 6 }, (_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    size: 200 + Math.random() * 400,
-    duration: 8 + Math.random() * 8,
-    delay: Math.random() * 4,
-  }));
+  // Show the home dashboard when in "chat" view with no active session
+  const showHomePage = activeView === "chat" && !activeSessionId;
 
   return (
-    <div className="relative flex h-screen overflow-hidden bg-primary">
-      {/* Ambient background glows */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div
-          className="absolute -top-32 -left-32 w-96 h-96 rounded-full opacity-[0.04]"
-          style={{ background: "radial-gradient(circle, #A7BBEC, transparent)" }}
-        />
-        <div
-          className="absolute bottom-0 right-0 w-80 h-80 rounded-full opacity-[0.03]"
-          style={{ background: "radial-gradient(circle, #9097C0, transparent)" }}
-        />
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.02]"
-          style={{ background: "radial-gradient(circle, #503B31, transparent)" }}
-        />
-      </div>
-
+    <div className="relative flex h-screen overflow-hidden" style={{ background: "linear-gradient(135deg, #050816 0%, #0B1330 45%, #161F3F 100%)" }}>
       {/* Sidebar */}
       <Sidebar />
 
@@ -70,19 +44,24 @@ export default function Home() {
         <div className="flex-1 overflow-y-auto overflow-x-hidden">
           <AnimatePresence mode="wait">
             <motion.div
-              key={activeView}
+              key={showHomePage ? "home" : activeView}
               className="h-full"
               initial={{ opacity: 0, x: 12 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -12 }}
               transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
             >
-              {activeView === "chat" ? (
+              {showHomePage ? (
+                <HomePage />
+              ) : activeView === "chat" ? (
                 <div className="h-full flex flex-col">
                   <ChatArea />
                 </div>
               ) : (
-                <ActiveComponent />
+                (() => {
+                  const Comp = VIEW_COMPONENTS[activeView as keyof typeof VIEW_COMPONENTS];
+                  return Comp ? <Comp /> : null;
+                })()
               )}
             </motion.div>
           </AnimatePresence>

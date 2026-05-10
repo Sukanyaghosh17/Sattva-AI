@@ -34,7 +34,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="bg-primary text-white antialiased">
+      <body className="bg-background-main text-text-primary antialiased">
         <Toaster
           position="top-right"
           toastOptions={{

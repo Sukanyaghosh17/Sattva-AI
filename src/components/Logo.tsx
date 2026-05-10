@@ -1,60 +1,64 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 
 interface LogoProps {
   size?: "sm" | "md" | "lg";
-  showText?: boolean;
   animate?: boolean;
 }
 
 const sizes = {
-  sm: { icon: 28, text: "text-base" },
-  md: { icon: 38, text: "text-xl" },
-  lg: { icon: 56, text: "text-3xl" },
+  sm: { icon: 28 },
+  md: { icon: 34 },
+  lg: { icon: 56 },
 };
 
 export default function Logo({
   size = "md",
-  showText = true,
   animate = true,
 }: LogoProps) {
-  const { icon, text } = sizes[size];
+  const { icon } = sizes[size];
 
   return (
-    <div className="flex items-center gap-2.5">
+    <div className="flex items-center gap-3">
       {/* Animated SVG Logo */}
       <motion.div
         className="relative flex-shrink-0"
         animate={animate ? { scale: [1, 1.03, 1] } : {}}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       >
-        <Image
+        <img
           src="/logo.png"
           alt="Sattav AI Logo"
           width={icon}
           height={icon}
-          className={`rounded-full object-cover ${animate ? "logo-glow" : ""}`}
+          className={`object-contain ${animate ? "logo-glow" : ""}`}
         />
       </motion.div>
 
-      {showText && (
-        <div className="flex flex-col leading-none">
-          <span
-            className={`font-display font-bold tracking-tight text-gradient ${text}`}
-            style={{ fontFamily: "'Outfit', sans-serif" }}
-          >
-            Sattav
-          </span>
-          <span
-            className="text-[10px] font-medium tracking-[0.2em] uppercase"
-            style={{ color: "#9097C0", marginTop: "-1px" }}
-          >
-            AI Wellness
-          </span>
-        </div>
-      )}
+      {/* Brand text */}
+      <div className="flex flex-col leading-none">
+        <span
+          className="font-semibold tracking-wide"
+          style={{
+            fontFamily: "'Outfit', sans-serif",
+            fontSize: size === "sm" ? 16 : size === "md" ? 21 : 26,
+            color: "#E8E4FF",
+          }}
+        >
+          Sattav
+        </span>
+        <span
+          className="font-medium uppercase tracking-[0.25em]"
+          style={{
+            fontSize: size === "sm" ? 8 : size === "md" ? 9 : 11,
+            color: "#69728E",
+            marginTop: 2,
+          }}
+        >
+          AI Wellness
+        </span>
+      </div>
     </div>
   );
 }

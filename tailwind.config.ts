@@ -9,20 +9,49 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: "#020202",
-        mocha: "#503B31",
-        taupe: "#705D56",
-        lavender: "#9097C0",
-        powder: "#A7BBEC",
+        background: {
+          main: "#050816",
+          sidebar: "#0A1023",
+          card: "#111936",
+          secondary: "#161F3F",
+        },
+        accent: {
+          primary: "#8B7CFF",
+          start: "#7B61FF",
+          end: "#A78BFA",
+          glow: "#6C63FF",
+        },
+        text: {
+          heading: "#D9D6FF",
+          primary: "#B7BCD6",
+          secondary: "#7E86A8",
+          placeholder: "#667085",
+        },
+        support: {
+          emotional: "#FF7AC6",
+          meditation: "#A78BFA",
+          anxiety: "#4DA3FF",
+          affirmation: "#FFD166",
+        },
+        extra: {
+          cyan: "#6EE7F9",
+          peach: "#FFB4A2",
+          rose: "#F472B6",
+          mint: "#6EE7B7",
+        }
       },
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
         display: ["Outfit", "system-ui", "sans-serif"],
       },
       backgroundImage: {
+        "gradient-main": "linear-gradient(135deg, #050816 0%, #0B1330 45%, #161F3F 100%)",
+        "gradient-button": "linear-gradient(90deg, #7B61FF 0%, #A78BFA 100%)",
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
+      boxShadow: {
+        "glow-effect": "0 0 30px rgba(139, 124, 255, 0.35)",
       },
       animation: {
         "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
