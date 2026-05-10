@@ -65,14 +65,14 @@ export default function TopBar() {
           }}
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.96 }}
-          className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-[12px] font-semibold transition-all"
+          className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-[13px] font-semibold transition-all"
           style={{
             background: "rgba(139,124,255,0.1)",
             border: "1px solid rgba(139,124,255,0.2)",
             color: "#D9D6FF",
           }}
         >
-          <Plus size={13} />
+          <Plus size={14} />
           New Chat
         </motion.button>
 
@@ -81,7 +81,7 @@ export default function TopBar() {
           className="p-2 rounded-xl hover:bg-white/5 transition-colors relative"
           style={{ color: "#7E86A8" }}
         >
-          <Bell size={17} />
+          <Bell size={18} />
           <span
             className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full"
             style={{ background: "#8B7CFF" }}

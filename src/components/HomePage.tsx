@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 import {
   Heart,
   Wind,
@@ -28,8 +27,10 @@ const SUPPORT_CARDS = [
     id: "emotional",
     icon: Heart,
     color: "#FF7AC6",
-    bg: "rgba(255,122,198,0.06)",
-    border: "rgba(255,122,198,0.15)",
+    bg: "rgba(255,122,198,0.05)",
+    border: "rgba(255,122,198,0.12)",
+    iconBg: "rgba(255,122,198,0.08)",
+    iconBorder: "rgba(255,122,198,0.18)",
     title: "I need emotional support",
     subtitle: "Talk about what's bothering you.",
     prompt: "I need emotional support. I'm going through a difficult time and need someone to listen.",
@@ -38,8 +39,10 @@ const SUPPORT_CARDS = [
     id: "meditation",
     icon: Wind,
     color: "#A78BFA",
-    bg: "rgba(167,139,250,0.06)",
-    border: "rgba(167,139,250,0.15)",
+    bg: "rgba(167,139,250,0.05)",
+    border: "rgba(167,139,250,0.12)",
+    iconBg: "rgba(167,139,250,0.08)",
+    iconBorder: "rgba(167,139,250,0.18)",
     title: "Guide me through meditation",
     subtitle: "Find calm and inner peace.",
     prompt: "Guide me through a calming meditation session.",
@@ -48,8 +51,10 @@ const SUPPORT_CARDS = [
     id: "anxiety",
     icon: Brain,
     color: "#4DA3FF",
-    bg: "rgba(77,163,255,0.06)",
-    border: "rgba(77,163,255,0.15)",
+    bg: "rgba(77,163,255,0.05)",
+    border: "rgba(77,163,255,0.12)",
+    iconBg: "rgba(77,163,255,0.08)",
+    iconBorder: "rgba(77,163,255,0.18)",
     title: "Help with anxiety & stress",
     subtitle: "Tools and exercises to feel better.",
     prompt: "I'm feeling anxious and stressed. Help me with techniques to manage these feelings.",
@@ -58,8 +63,10 @@ const SUPPORT_CARDS = [
     id: "affirmation",
     icon: Sparkles,
     color: "#FFD166",
-    bg: "rgba(255,209,102,0.06)",
-    border: "rgba(255,209,102,0.15)",
+    bg: "rgba(255,209,102,0.05)",
+    border: "rgba(255,209,102,0.12)",
+    iconBg: "rgba(255,209,102,0.08)",
+    iconBorder: "rgba(255,209,102,0.18)",
     title: "Give me an affirmation",
     subtitle: "Uplift your mind with positive words.",
     prompt: "Give me some powerful affirmations to boost my confidence and mental wellbeing.",
@@ -140,7 +147,7 @@ export default function HomePage() {
           style={{
             position: "relative",
             overflow: "hidden",
-            minHeight: 340,
+            minHeight: 360,
             background: "linear-gradient(160deg, #070D24 0%, #0C1535 30%, #151040 55%, #1A0E3A 75%, #0B0620 100%)",
           }}
         >
@@ -152,7 +159,17 @@ export default function HomePage() {
               backgroundImage: "url('/background_HomePage.png')",
               backgroundSize: "cover",
               backgroundPosition: "center",
-              opacity: 0.7,
+              opacity: 0.65,
+            }}
+          />
+
+          {/* Subtle gradient overlay for depth */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: "linear-gradient(to bottom, rgba(7,13,36,0.1) 0%, rgba(7,13,36,0.7) 100%)",
+              pointerEvents: "none",
             }}
           />
 
@@ -187,16 +204,17 @@ export default function HomePage() {
               display: "flex",
               alignItems: "flex-start",
               justifyContent: "space-between",
-              padding: "32px 40px 32px 40px",
+              padding: "48px 48px 40px 48px",
+              gap: 40,
             }}
           >
             {/* Left: Text content */}
-            <div style={{ flex: 1, maxWidth: 640, paddingTop: 8 }}>
+            <div style={{ flex: 1, maxWidth: 600, paddingTop: 8 }}>
               <motion.p
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                style={{ fontSize: 17, marginBottom: 8, color: "#B7BCD6" }}
+                style={{ fontSize: 16, marginBottom: 10, color: "#B7BCD6" }}
               >
                 Welcome back 👋
               </motion.p>
@@ -207,11 +225,11 @@ export default function HomePage() {
                 transition={{ delay: 0.18 }}
                 style={{
                   fontFamily: "'Outfit', sans-serif",
-                  fontSize: 32,
+                  fontSize: 34,
                   fontWeight: 700,
                   color: "#E8E4FF",
-                  lineHeight: 1.15,
-                  marginBottom: 16,
+                  lineHeight: 1.2,
+                  marginBottom: 18,
                 }}
               >
                 Your safe space to breathe &amp; heal
@@ -222,10 +240,10 @@ export default function HomePage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.26 }}
               >
-                <p style={{ fontSize: 13, lineHeight: 1.6, marginBottom: 2, color: "#8E93B0" }}>
+                <p style={{ fontSize: 14, lineHeight: 1.7, marginBottom: 3, color: "#8E93B0" }}>
                   I&apos;m Sattav, your compassionate AI wellness companion.
                 </p>
-                <p style={{ fontSize: 13, lineHeight: 1.6, color: "#8E93B0" }}>
+                <p style={{ fontSize: 14, lineHeight: 1.7, color: "#8E93B0" }}>
                   Share what&apos;s on your mind — I&apos;m here to listen, support, and guide you toward calm.
                 </p>
               </motion.div>
@@ -236,20 +254,20 @@ export default function HomePage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.34 }}
                 style={{
-                  marginTop: 24,
+                  marginTop: 28,
                   borderRadius: 16,
                   padding: "20px 24px",
-                  background: "rgba(14,18,42,0.45)",
-                  border: "1px solid rgba(139,124,255,0.14)",
-                  backdropFilter: "blur(20px)",
-                  WebkitBackdropFilter: "blur(20px)",
+                  background: "rgba(12,16,38,0.55)",
+                  border: "1px solid rgba(139,124,255,0.12)",
+                  backdropFilter: "blur(24px)",
+                  WebkitBackdropFilter: "blur(24px)",
                   maxWidth: 520,
                 }}
               >
                 <p
                   style={{
-                    fontSize: 11,
-                    fontWeight: 600,
+                    fontSize: 10,
+                    fontWeight: 700,
                     textTransform: "uppercase",
                     letterSpacing: "0.16em",
                     marginBottom: 12,
@@ -269,7 +287,7 @@ export default function HomePage() {
                     exit={{ opacity: 0, y: -8 }}
                     transition={{ duration: 0.4 }}
                     style={{
-                      fontSize: 15,
+                      fontSize: 16,
                       fontWeight: 500,
                       lineHeight: 1.6,
                       color: "#D9D6FF",
@@ -289,8 +307,8 @@ export default function HomePage() {
                       style={{
                         borderRadius: 99,
                         transition: "all 0.3s",
-                        width: i === affirmationIdx ? 18 : 6,
-                        height: 6,
+                        width: i === affirmationIdx ? 20 : 7,
+                        height: 7,
                         background: i === affirmationIdx ? "#8B7CFF" : "rgba(139,124,255,0.25)",
                         border: "none",
                         cursor: "pointer",
@@ -301,11 +319,34 @@ export default function HomePage() {
                 </div>
               </motion.div>
             </div>
+
+            {/* Right: Robot illustration */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className="hidden lg:block"
+              style={{
+                flexShrink: 0,
+                width: 260,
+                marginTop: 10,
+              }}
+            >
+              <img
+                src="/meditation_robot.png"
+                alt="Sattav AI meditation companion"
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  filter: "drop-shadow(0 0 40px rgba(139,124,255,0.2))",
+                }}
+              />
+            </motion.div>
           </div>
         </div>
 
         {/* ── Main content area ─────────────────────────────────────────── */}
-        <div style={{ padding: "28px 40px 16px 40px" }}>
+        <div style={{ padding: "32px 48px 16px 48px" }}>
 
           {/* Support cards section */}
           <section>
@@ -314,9 +355,9 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
               style={{
-                fontSize: 15,
+                fontSize: 16,
                 fontWeight: 600,
-                marginBottom: 20,
+                marginBottom: 22,
                 color: "#D9D6FF",
                 fontFamily: "'Outfit', sans-serif",
               }}
@@ -333,7 +374,7 @@ export default function HomePage() {
                     initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.35 + idx * 0.07 }}
-                    whileHover={{ y: -3 }}
+                    whileHover={{ y: -4, transition: { duration: 0.2 } }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => startChatWithPrompt(card.prompt)}
                     className={`support-card-${card.id}`}
@@ -344,29 +385,31 @@ export default function HomePage() {
                       transition: "all 0.3s",
                       background: card.bg,
                       border: `1px solid ${card.border}`,
-                      padding: "20px 18px",
+                      padding: "22px 20px",
                       cursor: "pointer",
+                      display: "flex",
+                      flexDirection: "column",
                     }}
                   >
                     {/* Icon badge */}
                     <div
                       style={{
-                        width: 44,
-                        height: 44,
-                        borderRadius: 12,
+                        width: 46,
+                        height: 46,
+                        borderRadius: 14,
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        marginBottom: 16,
-                        background: `${card.color}14`,
-                        border: `1px solid ${card.color}25`,
+                        marginBottom: 18,
+                        background: card.iconBg,
+                        border: `1px solid ${card.iconBorder}`,
                       }}
                     >
-                      <Icon size={19} style={{ color: card.color }} />
+                      <Icon size={20} style={{ color: card.color }} />
                     </div>
                     <p
                       style={{
-                        fontSize: 13,
+                        fontSize: 14,
                         fontWeight: 600,
                         lineHeight: 1.4,
                         marginBottom: 6,
@@ -375,23 +418,24 @@ export default function HomePage() {
                     >
                       {card.title}
                     </p>
-                    <p style={{ fontSize: 11.5, lineHeight: 1.5, marginBottom: 20, color: "#7E86A8" }}>
+                    <p style={{ fontSize: 12.5, lineHeight: 1.5, marginBottom: 0, color: "#7E86A8", flex: 1 }}>
                       {card.subtitle}
                     </p>
                     {/* Arrow */}
-                    <div style={{ display: "flex", alignItems: "center" }}>
+                    <div style={{ display: "flex", alignItems: "center", marginTop: 18 }}>
                       <div
                         style={{
-                          width: 28,
-                          height: 28,
+                          width: 30,
+                          height: 30,
                           borderRadius: 99,
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
-                          background: `${card.color}12`,
+                          background: `${card.color}10`,
+                          border: `1px solid ${card.color}18`,
                         }}
                       >
-                        <ArrowRight size={13} style={{ color: card.color }} />
+                        <ArrowRight size={14} style={{ color: card.color }} />
                       </div>
                     </div>
                   </motion.button>
@@ -401,7 +445,10 @@ export default function HomePage() {
           </section>
 
           {/* Bottom widgets row */}
-          <div className="hp-bottom-grid" style={{ marginTop: 28 }}>
+          <div
+            className="hp-bottom-grid"
+            style={{ marginTop: 28 }}
+          >
             {/* Daily Mood Tracker */}
             <motion.div
               initial={{ opacity: 0, y: 14 }}
@@ -409,30 +456,30 @@ export default function HomePage() {
               transition={{ delay: 0.55 }}
               style={{
                 borderRadius: 16,
-                padding: "20px 24px",
-                background: "rgba(14,18,42,0.5)",
+                padding: "22px 24px",
+                background: "rgba(12,16,38,0.55)",
                 border: "1px solid rgba(139,124,255,0.1)",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                <TrendingUp size={15} style={{ color: "#8B7CFF" }} />
-                <span style={{ fontSize: 13, fontWeight: 600, color: "#8B7CFF" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+                <TrendingUp size={16} style={{ color: "#8B7CFF" }} />
+                <span style={{ fontSize: 14, fontWeight: 600, color: "#8B7CFF" }}>
                   Daily Mood Tracker
                 </span>
               </div>
-              <p style={{ fontSize: 11.5, marginBottom: 20, color: "#7E86A8" }}>
+              <p style={{ fontSize: 12.5, marginBottom: 22, color: "#7E86A8" }}>
                 Track your mood and patterns over time.
               </p>
 
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
                   {MOOD_OPTIONS.map((m, i) => (
                     <button
                       key={i}
                       id={`mood-btn-${m.label}`}
                       onClick={() => setSelectedMood(i)}
                       style={{
-                        fontSize: 24,
+                        fontSize: 26,
                         opacity: selectedMood === null ? 1 : selectedMood === i ? 1 : 0.35,
                         transform: selectedMood === i ? "scale(1.2)" : "scale(1)",
                         transition: "all 0.2s",
@@ -454,9 +501,9 @@ export default function HomePage() {
                   onClick={handleLogMood}
                   disabled={selectedMood === null}
                   style={{
-                    padding: "8px 20px",
+                    padding: "9px 22px",
                     borderRadius: 12,
-                    fontSize: 12,
+                    fontSize: 13,
                     fontWeight: 600,
                     transition: "all 0.2s",
                     background: selectedMood !== null
@@ -479,10 +526,10 @@ export default function HomePage() {
               transition={{ delay: 0.62 }}
               style={{
                 borderRadius: 16,
-                padding: "20px 24px",
+                padding: "22px 24px",
                 position: "relative",
                 overflow: "hidden",
-                background: "rgba(14,18,42,0.5)",
+                background: "rgba(12,16,38,0.55)",
                 border: "1px solid rgba(139,124,255,0.1)",
               }}
             >
@@ -495,24 +542,24 @@ export default function HomePage() {
                   width: 160,
                   height: 160,
                   borderRadius: "50%",
-                  background: "radial-gradient(circle, rgba(255,180,100,0.1) 0%, transparent 70%)",
+                  background: "radial-gradient(circle, rgba(255,180,100,0.08) 0%, transparent 70%)",
                   pointerEvents: "none",
                 }}
               />
 
-              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                <BookOpen size={15} style={{ color: "#FFD166" }} />
-                <span style={{ fontSize: 13, fontWeight: 600, color: "#FFD166" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+                <BookOpen size={16} style={{ color: "#FFD166" }} />
+                <span style={{ fontSize: 14, fontWeight: 600, color: "#FFD166" }}>
                   Journal Prompt
                 </span>
               </div>
-              <p style={{ fontSize: 11.5, marginBottom: 16, color: "#7E86A8" }}>
+              <p style={{ fontSize: 12.5, marginBottom: 18, color: "#7E86A8" }}>
                 Take a few moments to reflect.
               </p>
 
               <p
                 style={{
-                  fontSize: 13.5,
+                  fontSize: 14,
                   fontWeight: 500,
                   marginBottom: 20,
                   lineHeight: 1.6,
@@ -530,15 +577,15 @@ export default function HomePage() {
                 whileTap={{ scale: 0.97 }}
                 onClick={() => setActiveView("journal")}
                 style={{
-                  padding: "8px 20px",
+                  padding: "9px 22px",
                   borderRadius: 12,
-                  fontSize: 12,
+                  fontSize: 13,
                   fontWeight: 600,
                   transition: "all 0.2s",
                   position: "relative",
                   zIndex: 1,
                   background: "rgba(255,209,102,0.1)",
-                  border: "1px solid rgba(255,209,102,0.25)",
+                  border: "1px solid rgba(255,209,102,0.2)",
                   color: "#FFD166",
                   cursor: "pointer",
                 }}
@@ -558,13 +605,13 @@ export default function HomePage() {
               alignItems: "center",
               justifyContent: "center",
               gap: 6,
-              fontSize: 11,
-              paddingTop: 12,
-              paddingBottom: 12,
+              fontSize: 11.5,
+              paddingTop: 20,
+              paddingBottom: 16,
               color: "#5A6180",
             }}
           >
-            <Shield size={11} />
+            <Shield size={12} />
             Sattav AI can make mistakes. Always seek professional help for serious concerns.
           </motion.p>
         </div>
