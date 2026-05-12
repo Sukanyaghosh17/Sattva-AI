@@ -23,14 +23,6 @@ Sattav AI is a premium, AI-powered mental health support web application designe
 - **Markdown**: React Markdown + Remark GFM
 - **AI Integration**: OpenAI SDK (GPT-4o streaming)
 
-## 🎨 Color Palette
-
-- `Primary Background`: `#020202`
-- `Deep Mocha Accent`: `#503B31`
-- `Taupe Grey Surface`: `#705D56`
-- `Lavender Grey Highlight`: `#9097C0`
-- `Powder Blue Accent`: `#A7BBEC`
-
 ## 🚀 Getting Started
 
 ### Prerequisites
