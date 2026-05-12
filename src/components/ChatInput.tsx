@@ -84,9 +84,9 @@ export default function ChatInput({ onSend, disabled, placeholder }: ChatInputPr
                 onClick={() => handleQuickPrompt(prompt)}
                 className="px-3 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap"
                 style={{
-                  background: "rgba(80,59,49,0.4)",
-                  border: "1px solid rgba(167,187,236,0.2)",
-                  color: "#A7BBEC",
+                  background: "rgba(139,124,255,0.1)",
+                  border: "1px solid rgba(139,124,255,0.2)",
+                  color: "#D9D6FF",
                   backdropFilter: "blur(12px)",
                 }}
               >
@@ -101,8 +101,8 @@ export default function ChatInput({ onSend, disabled, placeholder }: ChatInputPr
       <div
         className="input-focus-ring flex items-end gap-2 p-3 rounded-2xl transition-all"
         style={{
-          background: "rgba(80,59,49,0.25)",
-          border: "1px solid rgba(112,93,86,0.35)",
+          background: "rgba(10,13,32,0.65)",
+          border: "1px solid rgba(139,124,255,0.15)",
           backdropFilter: "blur(20px)",
           WebkitBackdropFilter: "blur(20px)",
         }}
@@ -112,14 +112,14 @@ export default function ChatInput({ onSend, disabled, placeholder }: ChatInputPr
           <button
             onClick={() => setShowQuickPrompts((s) => !s)}
             className="p-1.5 rounded-lg transition-colors"
-            style={{ color: showQuickPrompts ? "#A7BBEC" : "#705D56" }}
+            style={{ color: showQuickPrompts ? "#8B7CFF" : "#7E86A8" }}
             title="Quick prompts"
           >
             <Sparkles size={16} />
           </button>
           <button
             className="p-1.5 rounded-lg transition-colors hover:bg-white/5"
-            style={{ color: "#705D56" }}
+            style={{ color: "#7E86A8" }}
             title="Attach file"
           >
             <Smile size={16} />
@@ -135,9 +135,9 @@ export default function ChatInput({ onSend, disabled, placeholder }: ChatInputPr
           disabled={disabled}
           placeholder={placeholder ?? "Share what's on your mind…"}
           rows={1}
-          className="flex-1 bg-transparent outline-none resize-none text-sm leading-6 placeholder:opacity-50 py-0.5"
+          className="flex-1 bg-transparent outline-none resize-none text-sm leading-6 placeholder:opacity-50 py-0.5 custom-scroll"
           style={{
-            color: "#e2e2e2",
+            color: "#EEE9FF",
             minHeight: "24px",
             maxHeight: `${24 * maxRows}px`,
           }}
@@ -149,7 +149,7 @@ export default function ChatInput({ onSend, disabled, placeholder }: ChatInputPr
             onClick={toggleRecording}
             whileTap={{ scale: 0.9 }}
             className="p-1.5 rounded-lg transition-colors"
-            style={{ color: isRecording ? "#ff6b6b" : "#705D56" }}
+            style={{ color: isRecording ? "#FF7AC6" : "#7E86A8" }}
             title={isRecording ? "Stop recording" : "Voice input"}
           >
             {isRecording ? (
@@ -172,11 +172,11 @@ export default function ChatInput({ onSend, disabled, placeholder }: ChatInputPr
             className="p-2 rounded-xl transition-all disabled:opacity-30 disabled:cursor-not-allowed"
             style={{
               background: value.trim() && !disabled
-                ? "linear-gradient(135deg, #9097C0 0%, #A7BBEC 100%)"
-                : "rgba(144,151,192,0.15)",
-              color: value.trim() && !disabled ? "#020202" : "#705D56",
+                ? "linear-gradient(135deg, #7B61FF 0%, #A78BFA 100%)"
+                : "rgba(139,124,255,0.08)",
+              color: value.trim() && !disabled ? "#ffffff" : "#7E86A8",
               boxShadow: value.trim() && !disabled
-                ? "0 0 16px rgba(167,187,236,0.3)"
+                ? "0 4px 16px rgba(139,124,255,0.35)"
                 : "none",
             }}
           >
@@ -186,7 +186,7 @@ export default function ChatInput({ onSend, disabled, placeholder }: ChatInputPr
       </div>
 
       {/* Helper text */}
-      <p className="text-center text-[10px] mt-2 opacity-40" style={{ color: "#705D56" }}>
+      <p className="text-center text-[10.5px] mt-3 opacity-60" style={{ color: "#7E86A8" }}>
         Sattav AI can make mistakes. Always seek professional help for serious concerns.
       </p>
     </div>

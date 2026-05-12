@@ -39,8 +39,8 @@ export default function MessageBubble({ message, onRegenerate, isLast }: Message
           <div
             className="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-bold logo-glow"
             style={{
-              background: "linear-gradient(135deg, #9097C0 0%, #A7BBEC 100%)",
-              boxShadow: "0 0 12px rgba(167,187,236,0.25)",
+              background: "linear-gradient(135deg, #7B61FF 0%, #A78BFA 100%)",
+              boxShadow: "0 0 12px rgba(139,124,255,0.25)",
             }}
           >
             S
@@ -59,14 +59,16 @@ export default function MessageBubble({ message, onRegenerate, isLast }: Message
           style={
             isUser
               ? {
-                  background: "linear-gradient(135deg, rgba(167,187,236,0.25) 0%, rgba(144,151,192,0.2) 100%)",
-                  border: "1px solid rgba(167,187,236,0.25)",
-                  color: "#e8e8e8",
+                  background: "linear-gradient(135deg, rgba(139,124,255,0.2) 0%, rgba(139,124,255,0.1) 100%)",
+                  border: "1px solid rgba(139,124,255,0.25)",
+                  color: "#EEE9FF",
                 }
               : {
-                  background: "linear-gradient(135deg, rgba(80,59,49,0.4) 0%, rgba(112,93,86,0.25) 100%)",
-                  border: "1px solid rgba(112,93,86,0.3)",
-                  color: "#e2e2e2",
+                  background: "rgba(10,13,32,0.65)",
+                  border: "1px solid rgba(139,124,255,0.15)",
+                  color: "#D9D6FF",
+                  backdropFilter: "blur(20px)",
+                  WebkitBackdropFilter: "blur(20px)",
                 }
           }
         >
@@ -75,7 +77,7 @@ export default function MessageBubble({ message, onRegenerate, isLast }: Message
               <span className="prose-chat">{message.content}</span>
               <span
                 className="inline-block w-0.5 h-4 ml-0.5 animate-pulse"
-                style={{ background: "#A7BBEC" }}
+                style={{ background: "#8B7CFF" }}
               />
             </div>
           ) : (
@@ -91,7 +93,7 @@ export default function MessageBubble({ message, onRegenerate, isLast }: Message
                       const isBlock = className?.includes("language-");
                       return isBlock ? (
                         <pre className="relative">
-                          <div className="absolute top-2 right-2 text-[10px] px-2 py-0.5 rounded" style={{ color: "#705D56", background: "rgba(112,93,86,0.3)" }}>
+                          <div className="absolute top-2 right-2 text-[10px] px-2 py-0.5 rounded" style={{ color: "#7E86A8", background: "rgba(139,124,255,0.1)" }}>
                             {match?.[1] ?? "code"}
                           </div>
                           <code className={className} {...props}>
@@ -116,13 +118,13 @@ export default function MessageBubble({ message, onRegenerate, isLast }: Message
         {/* Timestamp & Actions */}
         {!message.isStreaming && (
           <div className={`flex items-center gap-2 px-1 opacity-0 group-hover:opacity-100 transition-opacity ${isUser ? "flex-row-reverse" : "flex-row"}`}>
-            <span className="text-[10px]" style={{ color: "#705D56" }}>
+            <span className="text-[10px]" style={{ color: "#7E86A8" }}>
               {format(new Date(message.timestamp), "h:mm a")}
             </span>
             <button
               onClick={handleCopy}
               className="p-1 rounded-md hover:bg-white/10 transition-colors"
-              style={{ color: "#705D56" }}
+              style={{ color: "#7E86A8" }}
               title="Copy"
             >
               {copied ? <Check size={11} className="text-green-400" /> : <Copy size={11} />}
@@ -131,7 +133,7 @@ export default function MessageBubble({ message, onRegenerate, isLast }: Message
               <button
                 onClick={() => onRegenerate(message.id)}
                 className="p-1 rounded-md hover:bg-white/10 transition-colors"
-                style={{ color: "#705D56" }}
+                style={{ color: "#7E86A8" }}
                 title="Regenerate"
               >
                 <RefreshCw size={11} />
@@ -147,8 +149,9 @@ export default function MessageBubble({ message, onRegenerate, isLast }: Message
           <div
             className="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-bold"
             style={{
-              background: "linear-gradient(135deg, #503B31 0%, #705D56 100%)",
-              border: "1px solid rgba(167,187,236,0.15)",
+              background: "linear-gradient(135deg, #1A1F3A 0%, #151040 100%)",
+              border: "1px solid rgba(139,124,255,0.15)",
+              color: "#8B7CFF",
             }}
           >
             U

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useChatStore } from "@/store/chatStore";
 import Logo from "./Logo";
 import { Plus, Bell } from "lucide-react";
+import { useState, useEffect } from "react";
 
 export default function TopBar() {
   const {
@@ -11,26 +12,32 @@ export default function TopBar() {
     createNewSession, setActiveSession, setActiveView,
     getActiveSession,
   } = useChatStore();
+  const [mounted, setMounted] = useState(false);
 
-  const activeSession = getActiveSession();
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const isHomePage = activeView === "chat" && !activeSessionId;
 
   const VIEW_TITLES: Record<string, string> = {
-    chat: "Chat",
-    mood: "Mood Tracker",
-    journal: "AI Journal",
-    meditate: "Meditation & Breathing",
+    chat:      "Chat",
+    mood:      "Mood Tracker",
+    journal:   "AI Journal",
+    meditate:  "Meditation & Breathing",
     analytics: "Wellness Analytics",
   };
 
   return (
     <header
-      className="flex items-center justify-between px-6 py-3 flex-shrink-0"
+      className="flex items-center justify-between flex-shrink-0"
       style={{
-        borderBottom: isHomePage ? "none" : "1px solid rgba(139,124,255,0.08)",
-        background: isHomePage ? "transparent" : "rgba(5,8,22,0.4)",
-        backdropFilter: isHomePage ? "none" : "blur(16px)",
-        WebkitBackdropFilter: isHomePage ? "none" : "blur(16px)",
+        padding: "0 20px",
+        height: 56,
+        borderBottom: isHomePage ? "none" : "1px solid rgba(139,124,255,0.07)",
+        background: isHomePage ? "transparent" : "rgba(6,8,22,0.45)",
+        backdropFilter: isHomePage ? "none" : "blur(20px)",
+        WebkitBackdropFilter: isHomePage ? "none" : "blur(20px)",
         position: isHomePage ? "absolute" : "relative",
         top: 0,
         left: 0,
@@ -38,16 +45,20 @@ export default function TopBar() {
         zIndex: 20,
       }}
     >
-      {/* Left: Logo + page title */}
+      {/* Left: Logo or page title */}
       <div className="flex items-center gap-4">
-        {!sidebarOpen && <Logo size="sm" animate />}
-        {sidebarOpen && activeView !== "chat" && (
+        {mounted && !sidebarOpen && <Logo size="sm" animate />}
+        {mounted && sidebarOpen && activeView !== "chat" && (
           <motion.h1
             key={activeView}
             initial={{ opacity: 0, y: -4 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-sm font-semibold"
-            style={{ color: "var(--text-heading)" }}
+            style={{
+              fontSize: 15,
+              fontWeight: 600,
+              color: "#D9D6FF",
+              fontFamily: "'Outfit', sans-serif",
+            }}
           >
             {VIEW_TITLES[activeView]}
           </motion.h1>
@@ -55,38 +66,65 @@ export default function TopBar() {
       </div>
 
       {/* Right: actions */}
-      <div className="flex items-center gap-2.5">
-        {/* New Chat */}
+      <div className="flex items-center gap-2">
+        {/* + New Chat pill button */}
         <motion.button
           onClick={() => {
             const id = createNewSession();
             setActiveSession(id);
             setActiveView("chat");
           }}
-          whileHover={{ scale: 1.04 }}
-          whileTap={{ scale: 0.96 }}
-          className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-[13px] font-semibold transition-all"
+          whileHover={{
+            scale: 1.03,
+            boxShadow: "0 4px 20px rgba(139,124,255,0.25)",
+          }}
+          whileTap={{ scale: 0.97 }}
+          className="flex items-center gap-1.5"
           style={{
-            background: "rgba(139,124,255,0.1)",
-            border: "1px solid rgba(139,124,255,0.2)",
+            padding: "7px 16px",
+            borderRadius: 10,
+            fontSize: 13,
+            fontWeight: 600,
+            background: "rgba(139,124,255,0.12)",
+            border: "1px solid rgba(139,124,255,0.22)",
             color: "#D9D6FF",
+            cursor: "pointer",
+            transition: "all 0.2s",
           }}
         >
-          <Plus size={14} />
+          <Plus size={14} strokeWidth={2.5} />
           New Chat
         </motion.button>
 
-        {/* Notification bell */}
-        <button
-          className="p-2 rounded-xl hover:bg-white/5 transition-colors relative"
-          style={{ color: "#7E86A8" }}
+        {/* Bell */}
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          className="relative flex items-center justify-center"
+          style={{
+            width: 36,
+            height: 36,
+            borderRadius: 10,
+            background: "rgba(255,255,255,0.04)",
+            border: "1px solid rgba(255,255,255,0.07)",
+            color: "#6a72a0",
+            cursor: "pointer",
+          }}
         >
-          <Bell size={18} />
+          <Bell size={16} strokeWidth={1.8} />
+          {/* Notification dot */}
           <span
-            className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full"
-            style={{ background: "#8B7CFF" }}
+            className="absolute"
+            style={{
+              width: 6,
+              height: 6,
+              borderRadius: "50%",
+              background: "#8B7CFF",
+              top: 8,
+              right: 8,
+              boxShadow: "0 0 4px rgba(139,124,255,0.7)",
+            }}
           />
-        </button>
+        </motion.button>
       </div>
     </header>
   );

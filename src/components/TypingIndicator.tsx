@@ -16,7 +16,8 @@ export default function TypingIndicator() {
         <div
           className="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-bold logo-glow"
           style={{
-            background: "linear-gradient(135deg, #9097C0 0%, #A7BBEC 100%)",
+            background: "linear-gradient(135deg, #7B61FF 0%, #A78BFA 100%)",
+            boxShadow: "0 0 12px rgba(139,124,255,0.25)",
           }}
         >
           S
@@ -27,8 +28,10 @@ export default function TypingIndicator() {
       <div
         className="px-4 py-3.5 rounded-2xl rounded-tl-sm"
         style={{
-          background: "linear-gradient(135deg, rgba(80,59,49,0.4) 0%, rgba(112,93,86,0.25) 100%)",
-          border: "1px solid rgba(112,93,86,0.3)",
+          background: "rgba(10,13,32,0.65)",
+          border: "1px solid rgba(139,124,255,0.15)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
         }}
       >
         <div className="flex items-center gap-1.5 h-4">
@@ -36,7 +39,7 @@ export default function TypingIndicator() {
             <motion.div
               key={i}
               className="w-1.5 h-1.5 rounded-full"
-              style={{ background: "#9097C0" }}
+              style={{ background: "#8B7CFF" }}
               animate={{
                 y: [0, -6, 0],
                 opacity: [0.4, 1, 0.4],

@@ -33,7 +33,7 @@ export default function Home() {
       <motion.main
         className="flex flex-col flex-1 min-w-0 relative z-10 overflow-hidden"
         animate={{
-          marginLeft: sidebarOpen ? 280 : 0,
+          marginLeft: sidebarOpen ? 252 : 0,
         }}
         transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
       >

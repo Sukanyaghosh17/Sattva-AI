@@ -89,6 +89,7 @@ export default function ChatArea() {
     const seedPrompt = sessionStorage.getItem("sattav-seed-prompt");
     if (seedPrompt && activeSessionId) {
       sessionStorage.removeItem("sattav-seed-prompt");
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       sendMessage(seedPrompt);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps

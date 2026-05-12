@@ -11,7 +11,7 @@
   --taupe: #705D56;
   --lavender: #9097C0;
   --powder: #A7BBEC;
-  --sidebar-width: 280px;
+  --sidebar-width: 252px;
 
   /* New palette */
   --bg-main: #050816;
@@ -188,8 +188,14 @@ body {
 
 /* Input focus ring */
 .input-focus-ring:focus-within {
-  border-color: rgba(139, 124, 255, 0.5);
-  box-shadow: 0 0 0 3px rgba(139, 124, 255, 0.1), 0 0 20px rgba(139, 124, 255, 0.1);
+  border-color: rgba(139, 124, 255, 0.45) !important;
+  box-shadow: 0 0 0 3px rgba(139, 124, 255, 0.08), 0 0 18px rgba(139, 124, 255, 0.08);
+}
+
+/* Sidebar search placeholder */
+.input-focus-ring input::placeholder {
+  color: #3e4568;
+  opacity: 1;
 }
 
 /* Mood badge */
@@ -282,6 +288,34 @@ body {
 }
 
 /* ── HomePage responsive layout ────────────────────────────────────── */
+.support-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 14px !important;
+}
+@media (max-width: 1100px) {
+  .support-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (max-width: 640px) {
+  .support-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.widgets-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 14px !important;
+}
+@media (max-width: 840px) {
+  .widgets-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* legacy classes kept for backward compat */
 .hp-support-grid {
   display: grid !important;
   grid-template-columns: repeat(2, 1fr) !important;
