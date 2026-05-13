@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, Mic, MicOff, Smile, Sparkles } from "lucide-react";
+import { Send, Mic, MicOff, Paperclip, Smile, Sparkles } from "lucide-react";
 
 interface ChatInputProps {
   onSend: (message: string) => void;
@@ -66,26 +66,29 @@ export default function ChatInput({ onSend, disabled, placeholder }: ChatInputPr
   };
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto px-4 md:px-0">
+    <div className="relative">
       {/* Quick Prompts */}
       <AnimatePresence>
         {showQuickPrompts && (
           <motion.div
-            initial={{ opacity: 0, y: 12, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            exit={{ opacity: 0, y: 12, filter: "blur(8px)" }}
-            className="absolute bottom-full mb-4 left-0 right-0 flex flex-wrap gap-2 justify-center pb-2 z-20"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 8 }}
+            className="absolute bottom-full mb-2 left-0 right-0 flex flex-wrap gap-2 pb-1"
           >
-            {QUICK_PROMPTS.map((prompt, idx) => (
+            {QUICK_PROMPTS.map((prompt) => (
               <motion.button
                 key={prompt}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: idx * 0.05 }}
-                whileHover={{ scale: 1.05, backgroundColor: "rgba(139,124,255,0.15)" }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={() => handleQuickPrompt(prompt)}
-                className="px-4 py-2 rounded-xl text-xs font-medium transition-all whitespace-nowrap glass border-white/5 text-[var(--text-heading)] shadow-xl"
+                className="px-3 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap"
+                style={{
+                  background: "rgba(139,124,255,0.1)",
+                  border: "1px solid rgba(139,124,255,0.2)",
+                  color: "#D9D6FF",
+                  backdropFilter: "blur(12px)",
+                }}
               >
                 {prompt}
               </motion.button>
@@ -96,97 +99,96 @@ export default function ChatInput({ onSend, disabled, placeholder }: ChatInputPr
 
       {/* Main input container */}
       <div
-        className={`relative group transition-all duration-500 ${
-          disabled ? "opacity-50 grayscale" : "opacity-100"
-        }`}
+        className="input-focus-ring flex items-end gap-2 p-3 rounded-2xl transition-all"
+        style={{
+          background: "rgba(10,13,32,0.65)",
+          border: "1px solid rgba(139,124,255,0.15)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+        }}
       >
-        {/* Input Glow Effect */}
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-[var(--accent-primary)]/20 to-[var(--accent-glow)]/20 rounded-2xl blur opacity-0 group-focus-within:opacity-100 transition duration-1000" />
-        
-        <div className="relative flex items-end gap-3 p-3 rounded-2xl glass-dark border-white/10 input-focus-ring">
-          {/* Left actions */}
-          <div className="flex items-center gap-1 flex-shrink-0 pb-1">
-            <button
-              onClick={() => setShowQuickPrompts((s) => !s)}
-              className={`p-2 rounded-xl transition-all duration-300 hover:bg-white/5 ${
-                showQuickPrompts ? "text-[var(--accent-primary)] bg-[var(--accent-primary)]/10" : "text-[var(--text-secondary)]"
-              }`}
-              title="Quick prompts"
-            >
-              <Sparkles size={18} />
-            </button>
-            <button
-              className="p-2 rounded-xl text-[var(--text-secondary)] hover:text-[var(--text-heading)] hover:bg-white/5 transition-all duration-300"
-              title="Add emoji"
-            >
-              <Smile size={18} />
-            </button>
-          </div>
+        {/* Left actions */}
+        <div className="flex items-center gap-1 flex-shrink-0 pb-0.5">
+          <button
+            onClick={() => setShowQuickPrompts((s) => !s)}
+            className="p-1.5 rounded-lg transition-colors"
+            style={{ color: showQuickPrompts ? "#8B7CFF" : "#7E86A8" }}
+            title="Quick prompts"
+          >
+            <Sparkles size={16} />
+          </button>
+          <button
+            className="p-1.5 rounded-lg transition-colors hover:bg-white/5"
+            style={{ color: "#7E86A8" }}
+            title="Attach file"
+          >
+            <Smile size={16} />
+          </button>
+        </div>
 
-          {/* Textarea */}
-          <textarea
-            ref={textareaRef}
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            onKeyDown={handleKeyDown}
-            disabled={disabled}
-            placeholder={placeholder ?? "Share what's on your mind…"}
-            rows={1}
-            className="flex-1 bg-transparent outline-none resize-none text-[15px] leading-6 py-1.5 custom-scroll text-[var(--text-heading)] placeholder:text-[var(--text-placeholder)]"
+        {/* Textarea */}
+        <textarea
+          ref={textareaRef}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          onKeyDown={handleKeyDown}
+          disabled={disabled}
+          placeholder={placeholder ?? "Share what's on your mind…"}
+          rows={1}
+          className="flex-1 bg-transparent outline-none resize-none text-sm leading-6 placeholder:opacity-50 py-0.5 custom-scroll"
+          style={{
+            color: "#EEE9FF",
+            minHeight: "24px",
+            maxHeight: `${24 * maxRows}px`,
+          }}
+        />
+
+        {/* Right actions */}
+        <div className="flex items-center gap-1 flex-shrink-0 pb-0.5">
+          <motion.button
+            onClick={toggleRecording}
+            whileTap={{ scale: 0.9 }}
+            className="p-1.5 rounded-lg transition-colors"
+            style={{ color: isRecording ? "#FF7AC6" : "#7E86A8" }}
+            title={isRecording ? "Stop recording" : "Voice input"}
+          >
+            {isRecording ? (
+              <motion.div
+                animate={{ opacity: [1, 0.3, 1] }}
+                transition={{ duration: 0.8, repeat: Infinity }}
+              >
+                <MicOff size={16} />
+              </motion.div>
+            ) : (
+              <Mic size={16} />
+            )}
+          </motion.button>
+
+          <motion.button
+            onClick={handleSend}
+            disabled={!value.trim() || disabled}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="p-2 rounded-xl transition-all disabled:opacity-30 disabled:cursor-not-allowed"
             style={{
-              minHeight: "24px",
-              maxHeight: `${24 * maxRows}px`,
+              background: value.trim() && !disabled
+                ? "linear-gradient(135deg, #7B61FF 0%, #A78BFA 100%)"
+                : "rgba(139,124,255,0.08)",
+              color: value.trim() && !disabled ? "#ffffff" : "#7E86A8",
+              boxShadow: value.trim() && !disabled
+                ? "0 4px 16px rgba(139,124,255,0.35)"
+                : "none",
             }}
-          />
-
-          {/* Right actions */}
-          <div className="flex items-center gap-2 flex-shrink-0 pb-1">
-            <motion.button
-              onClick={toggleRecording}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className={`p-2 rounded-xl transition-all duration-300 ${
-                isRecording ? "text-[var(--support-emotional)] bg-[var(--support-emotional)]/10" : "text-[var(--text-secondary)] hover:bg-white/5"
-              }`}
-              title={isRecording ? "Stop recording" : "Voice input"}
-            >
-              {isRecording ? (
-                <motion.div
-                  animate={{ scale: [1, 1.2, 1], opacity: [1, 0.6, 1] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                >
-                  <MicOff size={18} />
-                </motion.div>
-              ) : (
-                <Mic size={18} />
-              )}
-            </motion.button>
-
-            <motion.button
-              onClick={handleSend}
-              disabled={!value.trim() || disabled}
-              whileHover={value.trim() && !disabled ? { scale: 1.05 } : {}}
-              whileTap={value.trim() && !disabled ? { scale: 0.95 } : {}}
-              className={`p-2.5 rounded-xl transition-all duration-300 shadow-lg ${
-                value.trim() && !disabled
-                  ? "bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-glow)] text-white shadow-[var(--accent-primary)]/20"
-                  : "bg-white/5 text-[var(--text-secondary)] opacity-30 cursor-not-allowed"
-              }`}
-            >
-              <Send size={18} className={value.trim() && !disabled ? "translate-x-0.5" : ""} />
-            </motion.button>
-          </div>
+          >
+            <Send size={15} />
+          </motion.button>
         </div>
       </div>
 
       {/* Helper text */}
-      <motion.p 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.5 }}
-        className="text-center text-[10px] mt-4 text-[var(--text-placeholder)] uppercase tracking-widest font-medium"
-      >
-        Sattav AI can make mistakes. Consider professional help for serious concerns.
-      </motion.p>
+      <p className="text-center text-[10.5px] mt-3 opacity-60" style={{ color: "#7E86A8" }}>
+        Sattav AI can make mistakes. Always seek professional help for serious concerns.
+      </p>
     </div>
   );
 }

@@ -34,26 +34,23 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="bg-[var(--bg-main)] text-[var(--text-primary)] antialiased selection:bg-[var(--accent-primary)]/30 selection:text-white">
+      <body className="bg-background-main text-text-primary antialiased">
         <Toaster
           position="top-right"
           toastOptions={{
             style: {
-              background: "rgba(10, 16, 35, 0.85)",
-              color: "#D9D6FF",
-              border: "1px solid rgba(139, 124, 255, 0.15)",
-              backdropFilter: "blur(12px)",
-              WebkitBackdropFilter: "blur(12px)",
-              borderRadius: "16px",
+              background: "#503B31",
+              color: "#e8e8e8",
+              border: "1px solid rgba(167,187,236,0.2)",
+              borderRadius: "12px",
               fontFamily: "Inter, sans-serif",
               fontSize: "14px",
-              boxShadow: "0 10px 40px rgba(0,0,0,0.5)",
             },
             success: {
-              iconTheme: { primary: "#8B7CFF", secondary: "#0A1023" },
+              iconTheme: { primary: "#A7BBEC", secondary: "#020202" },
             },
             error: {
-              iconTheme: { primary: "#FF7AC6", secondary: "#0A1023" },
+              iconTheme: { primary: "#ff6b6b", secondary: "#020202" },
             },
           }}
         />
