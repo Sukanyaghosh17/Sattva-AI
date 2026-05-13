@@ -21,6 +21,7 @@ interface ChatStore {
 
   // UI State
   sidebarOpen: boolean;
+  sidebarWidth: number;
   searchQuery: string;
   isStreaming: boolean;
 
@@ -51,6 +52,7 @@ interface ChatStore {
   // Actions - UI
   toggleSidebar: () => void;
   setSidebarOpen: (open: boolean) => void;
+  setSidebarWidth: (width: number) => void;
   setSearchQuery: (query: string) => void;
   setActiveView: (view: ActiveView) => void;
 
@@ -78,6 +80,7 @@ export const useChatStore = create<ChatStore>()(
       activeSessionId: null,
       activeView: "chat",
       sidebarOpen: true,
+      sidebarWidth: 320,
       searchQuery: "",
       isStreaming: false,
       moodEntries: [],
@@ -177,6 +180,7 @@ export const useChatStore = create<ChatStore>()(
 
       toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
       setSidebarOpen: (open) => set({ sidebarOpen: open }),
+      setSidebarWidth: (width) => set({ sidebarWidth: width }),
       setSearchQuery: (query) => set({ searchQuery: query }),
       setActiveView: (view) => set({ activeView: view }),
 
@@ -250,6 +254,7 @@ export const useChatStore = create<ChatStore>()(
         sessions: state.sessions,
         activeSessionId: state.activeSessionId,
         sidebarOpen: state.sidebarOpen,
+        sidebarWidth: state.sidebarWidth,
         moodEntries: state.moodEntries,
         currentMood: state.currentMood,
         journalEntries: state.journalEntries,

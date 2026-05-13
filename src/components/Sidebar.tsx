@@ -23,23 +23,57 @@ const MOOD_EMOJIS: Record<string, string> = {
   happy: "😊", calm: "😌", anxious: "😰", sad: "😢", neutral: "😐",
 };
 
-const W = 252; // sidebar width
+
 
 /* ─── Sidebar ────────────────────────────────────────────────────────── */
 export default function Sidebar() {
   const {
-    activeSessionId, sidebarOpen, searchQuery, activeView,
+    activeSessionId, sidebarOpen, searchQuery, activeView, sidebarWidth,
     createNewSession, setActiveSession, deleteSession, pinSession,
     setSearchQuery, toggleSidebar, setActiveView, getFilteredSessions,
+    setSidebarWidth,
   } = useChatStore();
 
   const [hoveredSession, setHoveredSession] = useState<string | null>(null);
   const searchRef = useRef<HTMLInputElement>(null);
   const [mounted, setMounted] = useState(false);
+  const isResizing = useRef(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    isResizing.current = true;
+    document.body.style.cursor = "col-resize";
+    document.body.style.userSelect = "none";
+
+    const startX = e.clientX;
+    const startWidth = sidebarWidth;
+
+    const handleMouseMove = (moveEvent: MouseEvent) => {
+      if (!isResizing.current) return;
+      const delta = moveEvent.clientX - startX;
+      let newWidth = startWidth + delta;
+      
+      // Min and max width constraints
+      if (newWidth < 240) newWidth = 240;
+      if (newWidth > 500) newWidth = 500;
+
+      setSidebarWidth(newWidth);
+    };
+
+    const handleMouseUp = () => {
+      isResizing.current = false;
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+  };
 
   const filteredSessions = getFilteredSessions();
   const pinnedSessions   = filteredSessions.filter((s) => s.pinned);
@@ -70,16 +104,16 @@ export default function Sidebar() {
       <div
         className="fixed left-0 top-0 h-full z-30 overflow-hidden"
         style={{
-          width: sidebarOpen ? W : 0,
-          transition: "width 0.28s cubic-bezier(0.4,0,0.2,1)",
+          width: sidebarOpen ? sidebarWidth : 0,
+          transition: isResizing.current ? "none" : "width 0.28s cubic-bezier(0.4,0,0.2,1)",
         }}
       >
         <motion.aside
-          animate={{ x: sidebarOpen ? 0 : -W, opacity: sidebarOpen ? 1 : 0 }}
+          animate={{ x: sidebarOpen ? 0 : -sidebarWidth, opacity: sidebarOpen ? 1 : 0 }}
           transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
           className="absolute left-0 top-0 h-full overflow-hidden"
           style={{
-            width: W,
+            width: sidebarWidth,
             background: "linear-gradient(175deg, #0e1022 0%, #0a0c1c 40%, #08091a 75%, #060816 100%)",
             borderRight: "1px solid rgba(99,81,222,0.09)",
           }}
@@ -102,24 +136,39 @@ export default function Sidebar() {
             }}
           />
 
+          {/* ── Resizer Handle ────────────────────────────────────────────── */}
+          <div
+            onMouseDown={handleMouseDown}
+            style={{
+              position: "absolute",
+              top: 0,
+              right: 0,
+              width: 5,
+              height: "100%",
+              cursor: "col-resize",
+              zIndex: 50,
+            }}
+            className="hover:bg-white/10 transition-colors"
+          />
+
           {/* ── Scrollable content column ─────────────────────────────────── */}
           <div
             className="relative z-10 flex flex-col h-full"
-            style={{ width: W }}
+            style={{ width: sidebarWidth }}
           >
 
             {/* ──────────────────────────────────────────────────────────────
                 BRAND HEADER
             ────────────────────────────────────────────────────────────── */}
             <div
-              className="flex items-center gap-3 flex-shrink-0"
-              style={{ padding: "22px 18px 16px 18px" }}
+              className="flex items-center gap-4 flex-shrink-0"
+              style={{ padding: "28px 24px 20px 24px" }}
             >
               {/* Glowing orb logo */}
               <div
                 className="relative flex-shrink-0 flex items-center justify-center"
                 style={{
-                  width: 36, height: 36,
+                  width: 44, height: 44,
                   borderRadius: "50%",
                   background: "linear-gradient(145deg, #201960 0%, #2f248a 55%, #1c164e 100%)",
                   border: "1.5px solid rgba(139,124,255,0.32)",
@@ -130,16 +179,15 @@ export default function Sidebar() {
                 <img
                   src="/logo.png"
                   alt="Sattav AI"
-                  width={20}
-                  height={20}
+                  width={24}
+                  height={24}
                   className="object-contain"
                   style={{ filter: "drop-shadow(0 0 7px rgba(160,140,255,0.9))" }}
                 />
-                {/* Pulse ring */}
                 <span
                   className="absolute inset-0 rounded-full animate-ping"
                   style={{
-                    background: "rgba(83,64,200,0.14)",
+                    background: "rgba(83,64,200,0.18)",
                     animationDuration: "3.2s",
                   }}
                 />
@@ -150,7 +198,7 @@ export default function Sidebar() {
                 <span
                   style={{
                     fontFamily: "'Outfit', sans-serif",
-                    fontSize: 17,
+                    fontSize: 22,
                     fontWeight: 700,
                     color: "#EAE6FF",
                     letterSpacing: "-0.01em",
@@ -161,9 +209,9 @@ export default function Sidebar() {
                 </span>
                 <span
                   style={{
-                    fontSize: 8,
+                    fontSize: 10,
                     fontWeight: 600,
-                    color: "#3d4468",
+                    color: "#4a5178",
                     letterSpacing: "0.26em",
                     textTransform: "uppercase",
                     lineHeight: 1,
@@ -177,7 +225,7 @@ export default function Sidebar() {
             {/* ──────────────────────────────────────────────────────────────
                 NEW CONVERSATION BUTTON
             ────────────────────────────────────────────────────────────── */}
-            <div className="flex-shrink-0" style={{ padding: "0 14px", marginBottom: 8 }}>
+            <div className="flex-shrink-0" style={{ padding: "0 24px", marginBottom: 14 }}>
               <motion.button
                 onClick={handleNewChat}
                 whileHover={{
@@ -187,19 +235,19 @@ export default function Sidebar() {
                 whileTap={{ scale: 0.97 }}
                 className="w-full flex items-center justify-center gap-2"
                 style={{
-                  height: 42,
-                  borderRadius: 13,
-                  background: "linear-gradient(105deg, #5340c8 0%, #6d58de 50%, #7b64e8 100%)",
+                  height: 52,
+                  borderRadius: 14,
+                  background: "linear-gradient(105deg, #5c47df 0%, #7660e8 50%, #856cf2 100%)",
                   boxShadow: "0 4px 20px rgba(83,64,200,0.38)",
                   border: "none",
-                  fontSize: 13.5,
+                  fontSize: 15.5,
                   fontWeight: 600,
                   color: "#fff",
                   letterSpacing: "0.005em",
                   cursor: "pointer",
                 }}
               >
-                <Plus size={15} strokeWidth={2.5} />
+                <Plus size={18} strokeWidth={2.5} />
                 New Conversation
               </motion.button>
             </div>
@@ -207,20 +255,20 @@ export default function Sidebar() {
             {/* ──────────────────────────────────────────────────────────────
                 SEARCH BAR
             ────────────────────────────────────────────────────────────── */}
-            <div className="flex-shrink-0" style={{ padding: "0 14px", marginBottom: 12 }}>
+            <div className="flex-shrink-0" style={{ padding: "0 24px", marginBottom: 18 }}>
               <div
-                className="input-focus-ring flex items-center gap-2"
+                className="input-focus-ring flex items-center gap-3"
                 style={{
-                  height: 38,
-                  borderRadius: 11,
-                  padding: "0 12px",
-                  background: "rgba(255,255,255,0.035)",
-                  border: "1px solid rgba(255,255,255,0.075)",
+                  height: 48,
+                  borderRadius: 12,
+                  padding: "0 16px",
+                  background: "rgba(255,255,255,0.025)",
+                  border: "1px solid rgba(255,255,255,0.06)",
                   transition: "border-color 0.2s",
                 }}
               >
                 <Search
-                  size={13}
+                  size={15}
                   strokeWidth={2}
                   style={{ color: "#3e4568", flexShrink: 0 }}
                 />
@@ -231,7 +279,7 @@ export default function Sidebar() {
                   placeholder="Search conversations"
                   className="flex-1 bg-transparent outline-none border-none"
                   style={{
-                    fontSize: 12.5,
+                    fontSize: 14,
                     color: "#c5c1f0",
                     caretColor: "#8B7CFF",
                   }}
@@ -242,11 +290,11 @@ export default function Sidebar() {
             {/* ──────────────────────────────────────────────────────────────
                 NAVIGATION
             ────────────────────────────────────────────────────────────── */}
-            <div className="flex-shrink-0" style={{ padding: "0 14px", marginBottom: 10 }}>
+            <div className="flex-shrink-0" style={{ padding: "0 24px", marginBottom: 18 }}>
               {/* Section label */}
               <p
                 style={{
-                  fontSize: 9.5,
+                  fontSize: 11,
                   fontWeight: 700,
                   color: "#303756",
                   letterSpacing: "0.18em",
@@ -285,11 +333,11 @@ export default function Sidebar() {
             {/* ──────────────────────────────────────────────────────────────
                 DAILY CHECK-IN CARD
             ────────────────────────────────────────────────────────────── */}
-            <div className="flex-shrink-0" style={{ padding: "0 14px", marginBottom: 6 }}>
+            <div className="flex-shrink-0" style={{ padding: "0 24px", marginBottom: 16 }}>
               <div
                 style={{
-                  borderRadius: 16,
-                  padding: "13px 15px 12px",
+                  borderRadius: 18,
+                  padding: "20px 22px",
                   background:
                     "linear-gradient(140deg, rgba(16,14,38,0.96) 0%, rgba(12,10,30,0.98) 100%)",
                   border: "1px solid rgba(139,124,255,0.13)",
@@ -299,20 +347,20 @@ export default function Sidebar() {
                 {/* Header row */}
                 <div
                   className="flex items-center justify-between"
-                  style={{ marginBottom: 9 }}
+                  style={{ marginBottom: 11 }}
                 >
                   <span
                     style={{
-                      fontSize: 13,
+                      fontSize: 15.5,
                       fontWeight: 700,
-                      color: "#D8D4FF",
+                      color: "#FFFFFF",
                       letterSpacing: "0.005em",
                     }}
                   >
                     Daily Check-in
                   </span>
                   <Heart
-                    size={14}
+                    size={18}
                     style={{
                       color: "#8060d8",
                       fill: "#8060d8",
@@ -323,20 +371,20 @@ export default function Sidebar() {
 
                 <p
                   style={{
-                    fontSize: 12,
-                    color: "#8390b2",
+                    fontSize: 13.5,
+                    color: "#97a3c2",
                     lineHeight: 1.55,
-                    marginBottom: 2,
+                    marginBottom: 4,
                   }}
                 >
                   How are you feeling today?
                 </p>
                 <p
                   style={{
-                    fontSize: 11.5,
+                    fontSize: 12.5,
                     color: "#4c5272",
                     lineHeight: 1.55,
-                    marginBottom: 10,
+                    marginBottom: 18,
                   }}
                 >
                   Take a moment for yourself.
@@ -351,11 +399,11 @@ export default function Sidebar() {
                   }}
                   className="w-full flex items-center justify-center"
                   style={{
-                    height: 34,
-                    borderRadius: 10,
-                    background: "rgba(83,64,200,0.16)",
-                    border: "1px solid rgba(139,124,255,0.18)",
-                    fontSize: 12.5,
+                    height: 42,
+                    borderRadius: 12,
+                    background: "rgba(83,64,200,0.2)",
+                    border: "1px solid rgba(139,124,255,0.2)",
+                    fontSize: 14.5,
                     fontWeight: 500,
                     color: "#a698ff",
                     cursor: "pointer",
@@ -371,8 +419,8 @@ export default function Sidebar() {
                 CHAT SESSIONS (scrollable fill)
             ────────────────────────────────────────────────────────────── */}
             <div
-              className="flex-1 overflow-y-auto custom-scroll"
-              style={{ padding: "0 10px 4px", minHeight: 0 }}
+              className="flex-1 overflow-y-auto overflow-x-hidden custom-scroll"
+              style={{ padding: "0 18px 4px", minHeight: 0 }}
             >
               {mounted && pinnedSessions.length > 0 && (
                 <div style={{ marginBottom: 8 }}>
@@ -409,10 +457,11 @@ export default function Sidebar() {
                 USER PROFILE FOOTER
             ────────────────────────────────────────────────────────────── */}
             <div
-              className="flex items-center gap-2.5 flex-shrink-0"
+              className="flex items-center gap-4 flex-shrink-0"
               style={{
-                padding: "10px 15px 14px",
-                borderTop: "1px solid rgba(255,255,255,0.05)",
+                padding: "24px",
+                borderTop: "1px solid rgba(255,255,255,0.03)",
+                background: "rgba(0,0,0,0.1)",
               }}
             >
               {/* Avatar with online indicator */}
@@ -420,10 +469,10 @@ export default function Sidebar() {
                 <div
                   className="flex items-center justify-center text-white font-bold"
                   style={{
-                    width: 34,
-                    height: 34,
+                    width: 48,
+                    height: 48,
                     borderRadius: "50%",
-                    fontSize: 13.5,
+                    fontSize: 18,
                     background: "linear-gradient(140deg, #383b6a 0%, #4a4d8c 100%)",
                     boxShadow: "0 2px 12px rgba(72,74,140,0.4)",
                   }}
@@ -451,9 +500,9 @@ export default function Sidebar() {
                 <p
                   className="truncate"
                   style={{
-                    fontSize: 13,
+                    fontSize: 16,
                     fontWeight: 600,
-                    color: "#D4D0F0",
+                    color: "#FFFFFF",
                     lineHeight: 1.2,
                   }}
                 >
@@ -462,10 +511,10 @@ export default function Sidebar() {
                 <p
                   className="truncate"
                   style={{
-                    fontSize: 11,
+                    fontSize: 13,
                     color: "#3aaa72",
                     lineHeight: 1.3,
-                    marginTop: 1,
+                    marginTop: 2,
                   }}
                 >
                   wellness journey
@@ -481,15 +530,15 @@ export default function Sidebar() {
                 }}
                 className="flex-shrink-0"
                 style={{
-                  padding: 6,
-                  borderRadius: 8,
+                  padding: 8,
+                  borderRadius: 10,
                   background: "transparent",
                   border: "none",
                   color: "#3d4168",
                   cursor: "pointer",
                 }}
               >
-                <Settings size={15} strokeWidth={1.7} />
+                <Settings size={20} strokeWidth={1.8} />
               </motion.button>
             </div>
           </div>
@@ -542,11 +591,11 @@ function NavItem({
       transition={{ duration: 0.15 }}
       className="w-full flex items-center text-left"
       style={{
-        height: 38,
-        gap: 10,
-        paddingLeft: 10,
-        paddingRight: 10,
-        borderRadius: 11,
+        height: 48,
+        gap: 16,
+        paddingLeft: 16,
+        paddingRight: 16,
+        borderRadius: 12,
         border: "none",
         cursor: "pointer",
         background: isActive
@@ -561,7 +610,7 @@ function NavItem({
       }}
     >
       <Icon
-        size={16}
+        size={20}
         strokeWidth={isActive ? 2.2 : 1.8}
         style={{
           color: isActive ? "#a896f8" : hovered ? "#6a72a0" : "#404870",
@@ -571,9 +620,9 @@ function NavItem({
       />
       <span
         style={{
-          fontSize: 13.5,
+          fontSize: 15.5,
           fontWeight: isActive ? 600 : 400,
-          color: isActive ? "#E2DEFF" : hovered ? "#8890b4" : "#697098",
+          color: isActive ? "#FFFFFF" : hovered ? "#8890b4" : "#697098",
           letterSpacing: isActive ? "0.005em" : "0em",
           transition: "color 0.18s",
           flex: 1,

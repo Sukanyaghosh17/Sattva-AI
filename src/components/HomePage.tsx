@@ -146,7 +146,7 @@ export default function HomePage() {
         style={{
           position: "relative",
           overflow: "hidden",
-          minHeight: 340,
+          minHeight: 460,
           background:
             "linear-gradient(160deg, #070D24 0%, #0C1535 30%, #151040 55%, #1A0E3A 75%, #0B0620 100%)",
         }}
@@ -158,7 +158,7 @@ export default function HomePage() {
             inset: 0,
             backgroundImage: "url('/background_HomePage.png')",
             backgroundSize: "cover",
-            backgroundPosition: "center 30%",
+            backgroundPosition: "center top",
             opacity: 0.6,
           }}
         />
@@ -203,7 +203,7 @@ export default function HomePage() {
             display: "flex",
             alignItems: "flex-start",
             justifyContent: "space-between",
-            padding: "44px 48px 36px 48px",
+            padding: "84px 48px 40px 48px",
             gap: 32,
           }}
         >
@@ -325,7 +325,7 @@ export default function HomePage() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ delay: 0.28, duration: 0.65 }}
             className="hidden lg:block"
-            style={{ flexShrink: 0, width: 240, marginTop: 8 }}
+            style={{ flexShrink: 0, width: 320, marginTop: 12 }}
           >
             <img
               src="/meditation_robot.png"
@@ -339,12 +339,11 @@ export default function HomePage() {
             />
           </motion.div>
         </div>
-      </div>
 
-      {/* ════════════════════════════════════════════════════════════════
-          MAIN CONTENT
-      ════════════════════════════════════════════════════════════════ */}
-      <div style={{ padding: "28px 48px 20px 48px" }}>
+        {/* ════════════════════════════════════════════════════════════════
+            MAIN CONTENT
+        ════════════════════════════════════════════════════════════════ */}
+        <div style={{ position: "relative", zIndex: 10, padding: "0 48px 40px 48px" }}>
 
         {/* ── Support cards section ──────────────────────────────────── */}
         <section>
@@ -380,7 +379,7 @@ export default function HomePage() {
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.32 + idx * 0.07 }}
-                  whileHover={{ y: -3, transition: { duration: 0.18 } }}
+                  whileHover={{ y: -3, transition: { duration: 0.18 }, boxShadow: `0 8px 24px ${card.bg}` }}
                   whileTap={{ scale: 0.985 }}
                   onClick={() => startChat(card.prompt)}
                   className={`support-card-${card.id}`}
@@ -394,59 +393,52 @@ export default function HomePage() {
                     cursor: "pointer",
                     display: "flex",
                     flexDirection: "column",
+                    justifyContent: "space-between",
                     transition: "all 0.22s ease",
                   }}
                 >
-                  {/* Icon + text row */}
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "flex-start",
-                      gap: 16,
-                      flex: 1,
-                    }}
-                  >
-                    {/* Icon badge */}
-                    <div
-                      style={{
-                        width: 44,
-                        height: 44,
-                        borderRadius: 14,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0,
-                        background: card.iconBg,
-                        border: `1px solid ${card.iconBorder}`,
-                      }}
-                    >
-                      <Icon size={22} style={{ color: card.color }} />
-                    </div>
-
-                    {/* Text content */}
-                    <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                    {/* Icon + Title row */}
+                    <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                      {/* Icon badge */}
+                      <div
+                        style={{
+                          width: 44,
+                          height: 44,
+                          borderRadius: "50%",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          flexShrink: 0,
+                          background: card.iconBg,
+                          border: `1px solid ${card.iconBorder}`,
+                        }}
+                      >
+                        <Icon size={22} style={{ color: card.color }} />
+                      </div>
+                      {/* Title */}
                       <p
                         style={{
                           fontSize: 14.5,
                           fontWeight: 600,
                           lineHeight: 1.35,
                           color: "#D9D6FF",
-                          marginBottom: 6,
-                          paddingTop: 2,
                         }}
                       >
                         {card.title}
                       </p>
-                      <p
-                        style={{
-                          fontSize: 13,
-                          lineHeight: 1.5,
-                          color: "#7E86A8",
-                        }}
-                      >
-                        {card.subtitle}
-                      </p>
                     </div>
+
+                    {/* Subtitle */}
+                    <p
+                      style={{
+                        fontSize: 13,
+                        lineHeight: 1.5,
+                        color: "#7E86A8",
+                      }}
+                    >
+                      {card.subtitle}
+                    </p>
                   </div>
 
                   {/* Arrow */}
@@ -709,6 +701,7 @@ export default function HomePage() {
           <Shield size={12} />
           Sattav AI can make mistakes. Always seek professional help for serious concerns.
         </motion.p>
+        </div>
       </div>
     </div>
   );

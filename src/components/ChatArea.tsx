@@ -99,7 +99,7 @@ export default function ChatArea() {
     <div className="flex flex-col h-full relative">
       <CrisisBanner show={showCrisis} onDismiss={() => setShowCrisis(false)} />
 
-      {/* ── CHAT MESSAGES ── */}
+      {/* -- CHAT MESSAGES -- */}
       <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4 max-w-3xl w-full mx-auto">
         <AnimatePresence initial={false}>
           {messages.map((message, index) => (
