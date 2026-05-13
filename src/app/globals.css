@@ -23,11 +23,16 @@
   --text-heading: #D9D6FF;
   --text-primary: #B7BCD6;
   --text-secondary: #7E86A8;
-  --text-placeholder: #667085;
+  --text-placeholder: #485070;
   --support-emotional: #FF7AC6;
   --support-meditation: #A78BFA;
   --support-anxiety: #4DA3FF;
   --support-affirmation: #FFD166;
+  
+  /* Glass tokens */
+  --glass-bg: rgba(17, 25, 54, 0.45);
+  --glass-border: rgba(139, 124, 255, 0.08);
+  --glass-blur: 24px;
 }
 
 * {
@@ -65,43 +70,51 @@ body {
 
 /* Glassmorphism utilities */
 .glass {
-  background: rgba(17, 25, 54, 0.7);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(139, 124, 255, 0.1);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
 }
 
 .glass-dark {
-  background: rgba(5, 8, 22, 0.8);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  background: rgba(5, 8, 22, 0.85);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
   border: 1px solid rgba(139, 124, 255, 0.12);
 }
 
 .glass-card {
-  background: rgba(17, 25, 54, 0.6);
+  background: rgba(17, 25, 54, 0.4);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(139, 124, 255, 0.12);
+  border: 1px solid rgba(139, 124, 255, 0.08);
   border-radius: 1.25rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  background: rgba(17, 25, 54, 0.55);
+  border-color: rgba(139, 124, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px -12px rgba(0, 0, 0, 0.5), 0 0 20px rgba(139, 124, 255, 0.05);
 }
 
 /* Glow effects */
 .glow-accent {
-  box-shadow: 0 0 30px rgba(139, 124, 255, 0.35);
+  box-shadow: 0 0 30px rgba(139, 124, 255, 0.3);
 }
 
 .glow-accent-sm {
-  box-shadow: 0 0 15px rgba(139, 124, 255, 0.2);
+  box-shadow: 0 0 15px rgba(139, 124, 255, 0.15);
 }
 
-/* Legacy glow kept for compatibility */
-.glow-powder {
-  box-shadow: 0 0 20px rgba(139, 124, 255, 0.2), 0 0 40px rgba(108, 99, 255, 0.1);
+/* Enhanced Glows */
+.glow-card {
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
-.glow-powder-strong {
-  box-shadow: 0 0 30px rgba(139, 124, 255, 0.35), 0 0 60px rgba(108, 99, 255, 0.15);
+.glow-soft {
+  box-shadow: 0 0 40px rgba(139, 124, 255, 0.1);
 }
 
 /* Text gradients */
@@ -287,62 +300,56 @@ body {
   background: rgba(139,124,255,0.3);
 }
 
-/* ── HomePage responsive layout ────────────────────────────────────── */
-.support-grid {
-  display: grid !important;
-  grid-template-columns: repeat(4, 1fr) !important;
-  gap: 14px !important;
+/* ── Layout Utilities ────────────────────────────────────── */
+.section-padding {
+  padding: 2.5rem 3rem;
 }
-@media (max-width: 1100px) {
-  .support-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
+
+@media (max-width: 640px) {
+  .section-padding {
+    padding: 1.5rem 1.25rem;
   }
 }
+
+.support-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 1200px) {
+  .support-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 640px) {
   .support-grid {
-    grid-template-columns: 1fr !important;
+    grid-template-columns: 1fr;
   }
 }
 
 .widgets-grid {
-  display: grid !important;
-  grid-template-columns: repeat(2, 1fr) !important;
-  gap: 14px !important;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  margin-top: 1.5rem;
 }
+
 @media (max-width: 840px) {
   .widgets-grid {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-/* legacy classes kept for backward compat */
-.hp-support-grid {
-  display: grid !important;
-  grid-template-columns: repeat(2, 1fr) !important;
-  gap: 16px !important;
-}
-@media (min-width: 900px) {
-  .hp-support-grid {
-    grid-template-columns: repeat(4, 1fr) !important;
-  }
-}
-
-.hp-bottom-grid {
-  display: grid !important;
-  grid-template-columns: 1fr !important;
-  gap: 16px !important;
-}
-@media (min-width: 900px) {
-  .hp-bottom-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-columns: 1fr;
   }
 }
 
 .hp-robot {
-  display: none !important;
+  display: none;
 }
-@media (min-width: 900px) {
+
+@media (min-width: 1024px) {
   .hp-robot {
-    display: block !important;
+    display: block;
+    max-width: 280px;
+    filter: drop-shadow(0 0 40px rgba(139, 124, 255, 0.2));
   }
 }

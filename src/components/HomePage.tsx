@@ -9,7 +9,6 @@ import {
   Sparkles,
   ArrowRight,
   TrendingUp,
-  BookOpen,
   Shield,
   PenLine,
 } from "lucide-react";
@@ -27,7 +26,7 @@ const SUPPORT_CARDS = [
   {
     id: "emotional",
     icon: Heart,
-    color: "#FF7AC6",
+    color: "var(--support-emotional)",
     bg: "rgba(255,122,198,0.06)",
     border: "rgba(255,122,198,0.15)",
     iconBg: "rgba(255,122,198,0.12)",
@@ -39,7 +38,7 @@ const SUPPORT_CARDS = [
   {
     id: "meditation",
     icon: Wind,
-    color: "#A78BFA",
+    color: "var(--support-meditation)",
     bg: "rgba(167,139,250,0.06)",
     border: "rgba(167,139,250,0.15)",
     iconBg: "rgba(167,139,250,0.12)",
@@ -51,7 +50,7 @@ const SUPPORT_CARDS = [
   {
     id: "anxiety",
     icon: Brain,
-    color: "#4DA3FF",
+    color: "var(--support-anxiety)",
     bg: "rgba(77,163,255,0.06)",
     border: "rgba(77,163,255,0.15)",
     iconBg: "rgba(77,163,255,0.12)",
@@ -63,7 +62,7 @@ const SUPPORT_CARDS = [
   {
     id: "affirmation",
     icon: Sparkles,
-    color: "#FFD166",
+    color: "var(--support-affirmation)",
     bg: "rgba(255,209,102,0.06)",
     border: "rgba(255,209,102,0.15)",
     iconBg: "rgba(255,209,102,0.12)",
@@ -102,19 +101,17 @@ const STARS = [
   { w: 1, h: 1, l: 72, t: 50, o: 0.45, dur: 4.1, delay: 0.9  },
 ];
 
-/* ─── Main component ─────────────────────────────────────────────────────── */
 export default function HomePage() {
   const { createNewSession, setActiveSession, setActiveView, addMoodEntry } = useChatStore();
-  const [affIdx, setAffIdx]         = useState(0);
+  const [affIdx, setAffIdx] = useState(0);
   const [selectedMood, setSelectedMood] = useState<number | null>(null);
   const [moodLogged, setMoodLogged] = useState(false);
-  const [mounted, setMounted]       = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => { setMounted(true); }, []);
 
-  /* auto-cycle affirmations */
   useEffect(() => {
-    const t = setInterval(() => setAffIdx((i) => (i + 1) % AFFIRMATIONS.length), 4500);
+    const t = setInterval(() => setAffIdx((i) => (i + 1) % AFFIRMATIONS.length), 5000);
     return () => clearInterval(t);
   }, []);
 
@@ -134,414 +131,237 @@ export default function HomePage() {
   };
 
   return (
-    <div
-      className="relative flex-1 h-full custom-scroll"
-      style={{ overflowY: "auto", overflowX: "hidden" }}
-    >
-
+    <div className="relative flex-1 h-full overflow-y-auto overflow-x-hidden custom-scroll">
+      
       {/* ════════════════════════════════════════════════════════════════
           HERO SECTION
       ════════════════════════════════════════════════════════════════ */}
-      <div
-        style={{
-          position: "relative",
-          overflow: "hidden",
-          minHeight: 340,
-          background:
-            "linear-gradient(160deg, #070D24 0%, #0C1535 30%, #151040 55%, #1A0E3A 75%, #0B0620 100%)",
-        }}
-      >
-        {/* Background image */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            backgroundImage: "url('/background_HomePage.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center 30%",
-            opacity: 0.6,
-          }}
-        />
-        {/* Bottom fade */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "linear-gradient(to bottom, rgba(7,13,36,0.05) 0%, rgba(7,13,36,0.65) 100%)",
-            pointerEvents: "none",
-          }}
-        />
+      <section className="relative min-h-[360px] flex items-center overflow-hidden bg-[#070D24]">
+        {/* Background Gradients & Image */}
+        <div className="absolute inset-0 z-0">
+          <div 
+            className="absolute inset-0 bg-cover bg-center opacity-60"
+            style={{ backgroundImage: "url('/background_HomePage.png')" }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#070D24]/10 via-[#070D24]/60 to-[#050816]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#070D24] via-transparent to-transparent opacity-80" />
+        </div>
 
-        {/* Stars */}
+        {/* Animated Stars */}
         {mounted && (
-          <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none" }}>
+          <div className="absolute inset-0 pointer-events-none z-1 overflow-hidden">
             {STARS.map((s, i) => (
               <motion.div
                 key={i}
+                className="absolute rounded-full bg-white"
                 style={{
-                  position: "absolute",
-                  borderRadius: "50%",
-                  backgroundColor: "white",
                   width: s.w,
                   height: s.h,
                   left: `${s.l}%`,
                   top: `${s.t}%`,
                 }}
-                animate={{ opacity: [s.o * 0.3, s.o, s.o * 0.3] }}
-                transition={{ duration: s.dur, repeat: Infinity, delay: s.delay }}
+                animate={{ 
+                  opacity: [s.o * 0.2, s.o, s.o * 0.2],
+                  scale: [1, 1.2, 1]
+                }}
+                transition={{ 
+                  duration: s.dur, 
+                  repeat: Infinity, 
+                  delay: s.delay,
+                  ease: "easeInOut"
+                }}
               />
             ))}
           </div>
         )}
 
-        {/* Hero content */}
-        <div
-          style={{
-            position: "relative",
-            zIndex: 10,
-            display: "flex",
-            alignItems: "flex-start",
-            justifyContent: "space-between",
-            padding: "44px 48px 36px 48px",
-            gap: 32,
-          }}
-        >
-          {/* LEFT: text + affirmation */}
-          <div style={{ flex: 1, maxWidth: 580 }}>
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.08 }}
-              style={{ fontSize: 15.5, color: "#B0B5D0", marginBottom: 10 }}
+        {/* Hero Content Area */}
+        <div className="relative z-10 w-full section-padding flex flex-col lg:flex-row items-center justify-between gap-12">
+          <div className="max-w-xl text-center lg:text-left">
+            <motion.span
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="inline-block px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-[var(--text-secondary)] mb-6"
             >
               Welcome back 👋
-            </motion.p>
+            </motion.span>
 
             <motion.h1
-              initial={{ opacity: 0, y: 14 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.16 }}
-              style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: 36,
-                fontWeight: 700,
-                color: "#EEE9FF",
-                lineHeight: 1.15,
-                marginBottom: 16,
-                letterSpacing: "-0.01em",
-              }}
+              transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="font-outfit text-4xl md:text-5xl font-bold text-[#EEE9FF] leading-[1.1] mb-6 tracking-tight"
             >
-              Your safe space to breathe &amp; heal
+              Your safe space to <span className="text-gradient">breathe & heal</span>
             </motion.h1>
 
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.24 }}
+              transition={{ delay: 0.2 }}
+              className="text-base text-[var(--text-primary)] leading-relaxed mb-8 max-w-lg mx-auto lg:mx-0"
             >
-              <p style={{ fontSize: 14, lineHeight: 1.65, color: "#8B90B0", marginBottom: 2 }}>
-                I&apos;m Sattav, your compassionate AI wellness companion.
-              </p>
-              <p style={{ fontSize: 14, lineHeight: 1.65, color: "#8B90B0" }}>
-                Share what&apos;s on your mind — I&apos;m here to listen, support, and guide you toward calm.
-              </p>
-            </motion.div>
+              I&apos;m Sattav, your compassionate AI wellness companion. Share what&apos;s on your mind — I&apos;m here to listen, support, and guide you toward calm.
+            </motion.p>
 
-            {/* Affirmation card */}
+            {/* Affirmation Carousel */}
             <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.32 }}
-              style={{
-                marginTop: 28,
-                borderRadius: 16,
-                padding: "18px 22px",
-                background: "rgba(10,14,36,0.55)",
-                border: "1px solid rgba(139,124,255,0.12)",
-                backdropFilter: "blur(24px)",
-                WebkitBackdropFilter: "blur(24px)",
-                maxWidth: 500,
-              }}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3 }}
+              className="glass-dark p-5 rounded-2xl border-white/5 max-w-md mx-auto lg:mx-0 relative group"
             >
-              <p
-                style={{
-                  fontSize: 10,
-                  fontWeight: 700,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.18em",
-                  color: "#9097C0",
-                  marginBottom: 12,
-                }}
-              >
-                Today&apos;s Affirmation ✨
-              </p>
-              <AnimatePresence mode="wait">
-                <motion.p
-                  key={affIdx}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.38 }}
-                  style={{
-                    fontSize: 15.5,
-                    fontWeight: 500,
-                    lineHeight: 1.6,
-                    color: "#D9D6FF",
-                    fontFamily: "'Outfit', sans-serif",
-                  }}
-                >
-                  {AFFIRMATIONS[affIdx]}
-                </motion.p>
-              </AnimatePresence>
+              <div className="flex items-center gap-2 mb-3">
+                <Sparkles size={14} className="text-[var(--support-affirmation)]" />
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)]">
+                  Today&apos;s Affirmation
+                </span>
+              </div>
+              
+              <div className="h-14 flex items-center">
+                <AnimatePresence mode="wait">
+                  <motion.p
+                    key={affIdx}
+                    initial={{ opacity: 0, filter: "blur(4px)", y: 5 }}
+                    animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                    exit={{ opacity: 0, filter: "blur(4px)", y: -5 }}
+                    className="font-outfit text-lg font-medium text-[var(--text-heading)] leading-tight italic"
+                  >
+                    {AFFIRMATIONS[affIdx]}
+                  </motion.p>
+                </AnimatePresence>
+              </div>
 
-              {/* Dot pagination */}
-              <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 14 }}>
+              {/* Pagination Dots */}
+              <div className="flex items-center gap-1.5 mt-4">
                 {AFFIRMATIONS.map((_, i) => (
                   <button
                     key={i}
                     onClick={() => setAffIdx(i)}
-                    aria-label={`Affirmation ${i + 1}`}
-                    style={{
-                      borderRadius: 99,
-                      transition: "all 0.3s",
-                      width: i === affIdx ? 22 : 7,
-                      height: 7,
-                      background:
-                        i === affIdx ? "#8B7CFF" : "rgba(139,124,255,0.25)",
-                      border: "none",
-                      cursor: "pointer",
-                      padding: 0,
-                    }}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      i === affIdx ? "w-6 bg-[var(--accent-primary)]" : "w-1.5 bg-white/10 hover:bg-white/20"
+                    }`}
                   />
                 ))}
               </div>
             </motion.div>
           </div>
 
-          {/* RIGHT: Robot illustration */}
+          {/* Hero Illustration */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ delay: 0.28, duration: 0.65 }}
-            className="hidden lg:block"
-            style={{ flexShrink: 0, width: 240, marginTop: 8 }}
+            initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ 
+              delay: 0.4, 
+              duration: 1.2, 
+              ease: [0.16, 1, 0.3, 1] 
+            }}
+            className="hp-robot relative"
           >
+            <div className="absolute inset-0 bg-[var(--accent-primary)] blur-[80px] opacity-10 rounded-full" />
             <img
               src="/meditation_robot.png"
-              alt="Sattav AI meditation companion"
-              style={{
-                width: "100%",
-                height: "auto",
-                filter:
-                  "drop-shadow(0 0 32px rgba(139,124,255,0.25)) drop-shadow(0 0 8px rgba(139,124,255,0.1))",
-              }}
+              alt="Sattav AI"
+              className="relative z-10 w-full drop-shadow-[0_0_50px_rgba(139,124,255,0.3)]"
             />
           </motion.div>
         </div>
-      </div>
+      </section>
 
       {/* ════════════════════════════════════════════════════════════════
-          MAIN CONTENT
+          SUPPORT CARDS
       ════════════════════════════════════════════════════════════════ */}
-      <div style={{ padding: "28px 48px 20px 48px" }}>
-
-        {/* ── Support cards section ──────────────────────────────────── */}
+      <div className="section-padding !pt-10">
         <section>
-          <motion.h2
-            initial={{ opacity: 0, y: 8 }}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.28 }}
-            style={{
-              fontSize: 16,
-              fontWeight: 600,
-              color: "#D9D6FF",
-              fontFamily: "'Outfit', sans-serif",
-              marginBottom: 18,
-            }}
+            className="flex items-center justify-between mb-6"
           >
-            How can I support you today?
-          </motion.h2>
+            <h2 className="font-outfit text-xl font-semibold text-[var(--text-heading)]">
+              How can I support you today?
+            </h2>
+          </motion.div>
 
-          {/* 4-column grid */}
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(4, 1fr)",
-              gap: 14,
-            }}
-            className="support-grid"
-          >
-            {SUPPORT_CARDS.map((card, idx) => {
-              const Icon = card.icon;
-              return (
-                <motion.button
-                  key={card.id}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.32 + idx * 0.07 }}
-                  whileHover={{ y: -3, transition: { duration: 0.18 } }}
-                  whileTap={{ scale: 0.985 }}
-                  onClick={() => startChat(card.prompt)}
-                  className={`support-card-${card.id}`}
-                  style={{
-                    position: "relative",
-                    textAlign: "left",
-                    borderRadius: 16,
-                    background: card.bg,
-                    border: `1px solid ${card.border}`,
-                    padding: "20px 18px",
-                    cursor: "pointer",
-                    display: "flex",
-                    flexDirection: "column",
-                    transition: "all 0.22s ease",
-                  }}
-                >
-                  {/* Icon + text row */}
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "flex-start",
-                      gap: 16,
-                      flex: 1,
+          <div className="support-grid">
+            {SUPPORT_CARDS.map((card, idx) => (
+              <motion.button
+                key={card.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 + idx * 0.05 }}
+                onClick={() => startChat(card.prompt)}
+                className="group relative flex flex-col justify-between p-6 rounded-2xl glass-card text-left overflow-hidden border-white/[0.03]"
+              >
+                {/* Background Accent Gradient */}
+                <div 
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                  style={{ background: `radial-gradient(circle at 10% 10%, ${card.color}15, transparent 50%)` }}
+                />
+
+                <div className="relative z-10">
+                  <div 
+                    className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 transition-transform duration-500 group-hover:scale-110"
+                    style={{ 
+                      backgroundColor: card.iconBg, 
+                      border: `1px solid ${card.iconBorder}`,
+                      color: card.color
                     }}
                   >
-                    {/* Icon badge */}
-                    <div
-                      style={{
-                        width: 44,
-                        height: 44,
-                        borderRadius: 14,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0,
-                        background: card.iconBg,
-                        border: `1px solid ${card.iconBorder}`,
-                      }}
-                    >
-                      <Icon size={22} style={{ color: card.color }} />
-                    </div>
-
-                    {/* Text content */}
-                    <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-                      <p
-                        style={{
-                          fontSize: 14.5,
-                          fontWeight: 600,
-                          lineHeight: 1.35,
-                          color: "#D9D6FF",
-                          marginBottom: 6,
-                          paddingTop: 2,
-                        }}
-                      >
-                        {card.title}
-                      </p>
-                      <p
-                        style={{
-                          fontSize: 13,
-                          lineHeight: 1.5,
-                          color: "#7E86A8",
-                        }}
-                      >
-                        {card.subtitle}
-                      </p>
-                    </div>
+                    <card.icon size={24} />
                   </div>
+                  
+                  <h3 className="font-semibold text-[var(--text-heading)] text-base mb-2">
+                    {card.title}
+                  </h3>
+                  <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+                    {card.subtitle}
+                  </p>
+                </div>
 
-                  {/* Arrow */}
-                  <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 20 }}>
-                    <div
-                      style={{
-                        width: 30,
-                        height: 30,
-                        borderRadius: "50%",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        background: `${card.color}14`,
-                        border: `1px solid ${card.color}22`,
-                      }}
-                    >
-                      <ArrowRight size={14} style={{ color: card.color }} />
-                    </div>
+                <div className="mt-8 flex items-center justify-end">
+                  <div 
+                    className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 group-hover:translate-x-1"
+                    style={{ backgroundColor: `${card.color}15`, color: card.color }}
+                  >
+                    <ArrowRight size={16} />
                   </div>
-                </motion.button>
-              );
-            })}
+                </div>
+              </motion.button>
+            ))}
           </div>
         </section>
 
-        {/* ── Bottom 2-column widgets ───────────────────────────────── */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: 14,
-            marginTop: 22,
-          }}
-          className="widgets-grid"
-        >
-
-          {/* Daily Mood Tracker */}
+        {/* ── Widgets Grid ─────────────────────────────────────────── */}
+        <div className="widgets-grid">
+          {/* Mood Tracker */}
           <motion.div
-            initial={{ opacity: 0, y: 14 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.52 }}
-            style={{
-              borderRadius: 16,
-              padding: "22px 24px",
-              background: "rgba(10,13,32,0.65)",
-              border: "1px solid rgba(139,124,255,0.1)",
-              backdropFilter: "blur(16px)",
-              WebkitBackdropFilter: "blur(16px)",
-            }}
+            transition={{ delay: 0.4 }}
+            className="glass-card p-6 border-white/[0.03]"
           >
-            {/* Header */}
-            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 5 }}>
-              <TrendingUp size={15} style={{ color: "#8B7CFF" }} />
-              <span
-                style={{
-                  fontSize: 14,
-                  fontWeight: 600,
-                  color: "#8B7CFF",
-                  fontFamily: "'Outfit', sans-serif",
-                }}
-              >
-                Daily Mood Tracker
-              </span>
+            <div className="flex items-center gap-2 mb-4">
+              <TrendingUp size={16} className="text-[var(--accent-primary)]" />
+              <h3 className="font-outfit font-semibold text-[var(--accent-primary)]">Daily Mood Tracker</h3>
             </div>
-            <p style={{ fontSize: 12.5, color: "#7E86A8", marginBottom: 22 }}>
-              Track your mood and patterns over time.
+            
+            <p className="text-sm text-[var(--text-secondary)] mb-8">
+              How are you feeling at this moment?
             </p>
 
-            {/* Emoji row + Log button */}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <div className="flex flex-wrap items-center justify-between gap-6">
+              <div className="flex items-center gap-3 md:gap-4">
                 {MOOD_OPTIONS.map((m, i) => (
                   <motion.button
                     key={i}
-                    id={`mood-btn-${m.label}`}
                     onClick={() => setSelectedMood(i)}
-                    whileHover={{ scale: 1.15 }}
-                    whileTap={{ scale: 0.95 }}
-                    style={{
-                      fontSize: 24,
-                      opacity: selectedMood === null ? 1 : selectedMood === i ? 1 : 0.3,
-                      transform: selectedMood === i ? "scale(1.2)" : "scale(1)",
-                      transition: "all 0.2s",
-                      background: "none",
-                      border: "none",
-                      cursor: "pointer",
-                      padding: 0,
-                      lineHeight: 1,
-                    }}
+                    whileHover={{ scale: 1.2, y: -4 }}
+                    whileTap={{ scale: 0.9 }}
+                    className={`text-3xl transition-all duration-300 filter grayscale-[0.5] hover:grayscale-0 ${
+                      selectedMood === i ? "!grayscale-0 scale-125 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]" : 
+                      selectedMood !== null ? "opacity-30" : "opacity-80 hover:opacity-100"
+                    }`}
                     title={m.label}
                   >
                     {m.emoji}
@@ -550,165 +370,76 @@ export default function HomePage() {
               </div>
 
               <motion.button
-                id="log-mood-btn"
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.97 }}
                 onClick={handleLogMood}
                 disabled={selectedMood === null}
-                style={{
-                  padding: "9px 20px",
-                  borderRadius: 11,
-                  fontSize: 13,
-                  fontWeight: 600,
-                  background:
-                    selectedMood !== null
-                      ? "linear-gradient(90deg, #7B61FF, #A78BFA)"
-                      : "rgba(139,124,255,0.08)",
-                  color: selectedMood !== null ? "#fff" : "#7E86A8",
-                  border: "1px solid rgba(139,124,255,0.2)",
-                  cursor: selectedMood !== null ? "pointer" : "not-allowed",
-                  transition: "all 0.2s",
-                }}
+                whileHover={selectedMood !== null ? { scale: 1.05 } : {}}
+                whileTap={selectedMood !== null ? { scale: 0.95 } : {}}
+                className={`px-6 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 ${
+                  selectedMood !== null 
+                    ? "bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-glow)] text-white shadow-lg shadow-[var(--accent-primary)]/20" 
+                    : "bg-white/5 text-[var(--text-secondary)] cursor-not-allowed"
+                }`}
               >
-                {moodLogged ? "✓ Logged!" : "Log Mood"}
+                {moodLogged ? "✓ Logged" : "Log Mood"}
               </motion.button>
             </div>
           </motion.div>
 
           {/* Journal Prompt */}
           <motion.div
-            initial={{ opacity: 0, y: 14 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-            style={{
-              borderRadius: 16,
-              padding: "22px 24px",
-              position: "relative",
-              overflow: "hidden",
-              background: "rgba(10,13,32,0.65)",
-              border: "1px solid rgba(139,124,255,0.1)",
-              backdropFilter: "blur(16px)",
-              WebkitBackdropFilter: "blur(16px)",
-            }}
+            transition={{ delay: 0.5 }}
+            className="glass-card p-6 border-white/[0.03] relative overflow-hidden group"
           >
-            {/* Warm amber glow accent */}
-            <div
-              style={{
-                position: "absolute",
-                right: -30,
-                bottom: -30,
-                width: 200,
-                height: 200,
-                borderRadius: "50%",
-                background:
-                  "radial-gradient(circle, rgba(255,180,80,0.12) 0%, rgba(255,120,40,0.06) 50%, transparent 70%)",
-                pointerEvents: "none",
-              }}
-            />
-            {/* Extra warm glow top-right */}
-            <div
-              style={{
-                position: "absolute",
-                right: 0,
-                top: 0,
-                width: 160,
-                height: 160,
-                background:
-                  "radial-gradient(circle, rgba(255,150,60,0.07) 0%, transparent 70%)",
-                pointerEvents: "none",
-              }}
-            />
+            {/* Ambient Background Glow */}
+            <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-[var(--support-affirmation)]/10 blur-[50px] rounded-full group-hover:bg-[var(--support-affirmation)]/20 transition-colors duration-700" />
+            
+            <div className="relative z-10 h-full flex flex-col">
+              <div className="flex items-center gap-2 mb-4">
+                <PenLine size={16} className="text-[var(--support-affirmation)]" />
+                <h3 className="font-outfit font-semibold text-[var(--support-affirmation)]">Journal Prompt</h3>
+              </div>
 
-            {/* Header */}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                marginBottom: 5,
-                position: "relative",
-                zIndex: 1,
-              }}
-            >
-              <PenLine size={15} style={{ color: "#FFD166" }} />
-              <span
-                style={{
-                  fontSize: 14,
-                  fontWeight: 600,
-                  color: "#FFD166",
-                  fontFamily: "'Outfit', sans-serif",
-                }}
-              >
-                Journal Prompt
-              </span>
-            </div>
-            <p
-              style={{
-                fontSize: 12.5,
-                color: "#7E86A8",
-                marginBottom: 16,
-                position: "relative",
-                zIndex: 1,
-              }}
-            >
-              Take a few moments to reflect.
-            </p>
-
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, position: "relative", zIndex: 1 }}>
-              <p
-                style={{
-                  fontSize: 14,
-                  fontWeight: 500,
-                  color: "#D9D6FF",
-                  lineHeight: 1.6,
-                }}
-              >
-                &ldquo;What is one thing I can do today for my well-being?&rdquo;
+              <p className="text-sm text-[var(--text-secondary)] mb-6">
+                A small reflection for your mental clarity.
               </p>
 
-              <motion.button
-                id="write-journal-btn"
-                whileHover={{ scale: 1.03, boxShadow: "0 0 20px rgba(255,209,102,0.15)" }}
-                whileTap={{ scale: 0.97 }}
-                onClick={() => setActiveView("journal")}
-                style={{
-                  padding: "9px 20px",
-                  borderRadius: 11,
-                  fontSize: 13,
-                  fontWeight: 600,
-                  background: "rgba(255,209,102,0.1)",
-                  border: "1px solid rgba(255,209,102,0.22)",
-                  color: "#FFD166",
-                  cursor: "pointer",
-                  whiteSpace: "nowrap",
-                  transition: "all 0.2s",
-                }}
-              >
-                Write in Journal
-              </motion.button>
+              <div className="flex-1 flex flex-col justify-between">
+                <p className="text-lg font-medium text-[var(--text-heading)] leading-relaxed italic border-l-2 border-[var(--support-affirmation)]/30 pl-4 py-1 mb-6">
+                  &ldquo;What is one thing I can do today for my well-being?&rdquo;
+                </p>
+
+                <div className="flex justify-end">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setActiveView("journal")}
+                    className="px-6 py-2.5 rounded-xl font-semibold text-sm bg-[var(--support-affirmation)]/10 text-[var(--support-affirmation)] border border-[var(--support-affirmation)]/20 hover:bg-[var(--support-affirmation)]/20 transition-all duration-300"
+                  >
+                    Write Entry
+                  </motion.button>
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>
 
-        {/* ── Disclaimer footer ─────────────────────────────────────── */}
-        <motion.p
+        {/* ── Footer ─────────────────────────────────────────────── */}
+        <motion.footer
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.72 }}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 6,
-            fontSize: 11.5,
-            color: "#485070",
-            paddingTop: 22,
-            paddingBottom: 16,
-          }}
+          transition={{ delay: 0.8 }}
+          className="mt-16 mb-8 py-8 border-t border-white/[0.03] flex flex-col items-center gap-4"
         >
-          <Shield size={12} />
-          Sattav AI can make mistakes. Always seek professional help for serious concerns.
-        </motion.p>
+          <div className="flex items-center gap-2 text-[11px] font-medium text-[var(--text-placeholder)] uppercase tracking-widest">
+            <Shield size={12} className="text-[var(--accent-primary)]/50" />
+            <span>AI Powered Mental Wellness Companion</span>
+          </div>
+          <p className="text-[10px] text-[var(--text-placeholder)] max-w-md text-center opacity-70">
+            Sattav AI can make mistakes. This is not a replacement for professional medical advice, diagnosis, or treatment.
+          </p>
+        </motion.footer>
       </div>
     </div>
   );
