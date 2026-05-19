@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, Mic, MicOff, Paperclip, Smile, Sparkles } from "lucide-react";
+import { Send, Mic, MicOff, Smile, Sparkles } from "lucide-react";
 
 interface ChatInputProps {
   onSend: (message: string) => void;
@@ -22,7 +22,6 @@ export default function ChatInput({ onSend, disabled, placeholder }: ChatInputPr
   const [value, setValue] = useState("");
   const [isRecording, setIsRecording] = useState(false);
   const [showQuickPrompts, setShowQuickPrompts] = useState(false);
-  const [rows, setRows] = useState(1);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const maxRows = 6;
@@ -33,7 +32,7 @@ export default function ChatInput({ onSend, disabled, placeholder }: ChatInputPr
       const scrollHeight = textareaRef.current.scrollHeight;
       const lineHeight = 24;
       const newRows = Math.min(Math.ceil(scrollHeight / lineHeight), maxRows);
-      setRows(newRows);
+      // rows tracked implicitly via inline style
       textareaRef.current.style.height = `${Math.min(scrollHeight, lineHeight * maxRows)}px`;
     }
   }, [value]);
@@ -43,7 +42,6 @@ export default function ChatInput({ onSend, disabled, placeholder }: ChatInputPr
     if (!trimmed || disabled) return;
     onSend(trimmed);
     setValue("");
-    setRows(1);
     if (textareaRef.current) textareaRef.current.style.height = "auto";
   }, [value, disabled, onSend]);
 

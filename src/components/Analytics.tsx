@@ -28,7 +28,7 @@ export default function Analytics() {
     return { date, avgScore, entries: dayEntries };
   });
 
-  const maxScore = Math.max(...last7Days.map((d) => d.avgScore ?? 0), 1);
+  const _maxScore = Math.max(...last7Days.map((d) => d.avgScore ?? 0), 1);
   const totalSessions = sessions.length;
   const totalMessages = sessions.reduce((a, s) => a + s.messages.length, 0);
 

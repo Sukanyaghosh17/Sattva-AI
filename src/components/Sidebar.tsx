@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Plus, Search, Pin, Trash2, ChevronRight,
@@ -37,14 +38,17 @@ export default function Sidebar() {
   const [hoveredSession, setHoveredSession] = useState<string | null>(null);
   const searchRef = useRef<HTMLInputElement>(null);
   const [mounted, setMounted] = useState(false);
+  const [isResizingState, setIsResizingState] = useState(false);
   const isResizing = useRef(false);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     isResizing.current = true;
+    setIsResizingState(true);
     document.body.style.cursor = "col-resize";
     document.body.style.userSelect = "none";
 
@@ -65,6 +69,7 @@ export default function Sidebar() {
 
     const handleMouseUp = () => {
       isResizing.current = false;
+      setIsResizingState(false);
       document.body.style.cursor = "";
       document.body.style.userSelect = "";
       document.removeEventListener("mousemove", handleMouseMove);
@@ -105,7 +110,7 @@ export default function Sidebar() {
         className="fixed left-0 top-0 h-full z-30 overflow-hidden"
         style={{
           width: sidebarOpen ? sidebarWidth : 0,
-          transition: isResizing.current ? "none" : "width 0.28s cubic-bezier(0.4,0,0.2,1)",
+          transition: isResizingState ? "none" : "width 0.28s cubic-bezier(0.4,0,0.2,1)",
         }}
       >
         <motion.aside
@@ -176,7 +181,7 @@ export default function Sidebar() {
                     "0 0 20px rgba(83,64,200,0.55), 0 0 8px rgba(139,124,255,0.3) inset",
                 }}
               >
-                <img
+                <Image
                   src="/logo.png"
                   alt="Sattav AI"
                   width={24}
