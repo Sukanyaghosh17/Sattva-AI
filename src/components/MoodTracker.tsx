@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useChatStore } from "@/store/chatStore";
 import { MoodType } from "@/types";
 import { format } from "date-fns";
-import { TrendingUp } from "lucide-react";
+import { TrendingUp, Smile, Meh, Frown, Zap, Sun } from "lucide-react";
 import { toast } from "react-hot-toast";
 
 const MOODS: { type: MoodType; emoji: string; label: string; color: string; bg: string }[] = [

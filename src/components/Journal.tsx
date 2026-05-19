@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useChatStore } from "@/store/chatStore";
 import { MoodType } from "@/types";
 import { format } from "date-fns";
-import { Plus, Trash2, BookOpen } from "lucide-react";
+import { Plus, Trash2, Edit3, BookOpen } from "lucide-react";
 import { toast } from "react-hot-toast";
 
 const MOOD_EMOJIS: Record<MoodType, string> = {

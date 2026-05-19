@@ -88,8 +88,7 @@ export default function MessageBubble({ message, onRegenerate, isLast }: Message
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
                   components={{
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                    code({ node: _node, className, children, ...props }) {
+                    code({ node, className, children, ...props }) {
                       const match = /language-(\w+)/.exec(className || "");
                       const isBlock = className?.includes("language-");
                       return isBlock ? (

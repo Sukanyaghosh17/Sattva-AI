@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Heart,
@@ -111,7 +110,6 @@ export default function HomePage() {
   const [moodLogged, setMoodLogged] = useState(false);
   const [mounted, setMounted]       = useState(false);
 
-  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { setMounted(true); }, []);
 
   /* auto-cycle affirmations */
@@ -329,11 +327,9 @@ export default function HomePage() {
             className="hidden lg:block"
             style={{ flexShrink: 0, width: 320, marginTop: 12 }}
           >
-            <Image
+            <img
               src="/meditation_robot.png"
               alt="Sattav AI meditation companion"
-              width={320}
-              height={320}
               style={{
                 width: "100%",
                 height: "auto",

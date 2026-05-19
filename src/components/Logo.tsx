@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 
 interface LogoProps {
   size?: "sm" | "md" | "lg";
@@ -28,7 +27,7 @@ export default function Logo({
         animate={animate ? { scale: [1, 1.03, 1] } : {}}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       >
-        <Image
+        <img
           src="/logo.png"
           alt="Sattav AI Logo"
           width={icon}

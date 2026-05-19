@@ -49,10 +49,7 @@ export default function ChatArea() {
         body: JSON.stringify({ messages: [...history, { role: "user", content: text }], sessionId }),
       });
 
-      if (!response.ok || !response.body) {
-        const errData = await response.json().catch(() => ({}));
-        throw new Error(errData.error || "Failed to get response");
-      }
+      if (!response.ok || !response.body) throw new Error("Failed to get response");
       if (response.headers.get("X-Crisis-Detected") === "true") setShowCrisis(true);
 
       const reader = response.body.getReader();
@@ -67,7 +64,7 @@ export default function ChatArea() {
       }
       updateMessage(sessionId!, aiMsgId, accumulated);
     } catch (err) {
-      console.warn("Chat connection issue:", err instanceof Error ? err.message : err);
+      console.error("Chat error:", err);
       updateMessage(
         sessionId!, aiMsgId,
         "I'm sorry, I encountered an issue connecting. Please add your **OpenAI API key** to `.env.local` and restart the server. I'm still here for you. 💙"
