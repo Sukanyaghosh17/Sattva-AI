@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Plus, Search, Pin, Trash2, ChevronRight,
@@ -36,14 +36,13 @@ export default function Sidebar() {
 
   const [hoveredSession, setHoveredSession] = useState<string | null>(null);
   const searchRef = useRef<HTMLInputElement>(null);
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
   const isResizing = useRef(false);
   const [isResizingState, setIsResizingState] = useState(false);
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setMounted(true);
-  }, []);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     isResizing.current = true;

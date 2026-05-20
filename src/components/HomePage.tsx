@@ -1,16 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useSyncExternalStore } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Heart,
-  Wind,
   Brain,
   Sparkles,
   ArrowRight,
   TrendingUp,
-  BookOpen,
-  Shield,
   PenLine,
 } from "lucide-react";
 import { useChatStore } from "@/store/chatStore";
@@ -21,6 +18,34 @@ const AFFIRMATIONS = [
   "\"Every breath you take is a step toward healing.\" 🌿",
   "\"Your feelings are valid. You deserve peace.\" ✨",
 ];
+
+/* ─── Meditation Lotus Icon ─────────────────────────────────────────── */
+const MeditationIcon = ({ size = 22, ...props }: { size?: number } & React.SVGProps<SVGSVGElement>) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    {/* Head */}
+    <circle cx="12" cy="5" r="2" />
+    {/* Arms in gyan mudra */}
+    <path d="M6 14c0-3.5 3-4.5 6-4.5s6 1 6 4.5" />
+    <path d="M6 14a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
+    <path d="M21 14a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
+    {/* Torso/Spine */}
+    <path d="M12 7v7" />
+    {/* Lotus pose legs */}
+    <path d="M4 20c2-1 4-2.5 8-2.5s6 1.5 8 2.5" />
+    <path d="M8 17.5c-2.5 0-4 1.5-4 2.5" />
+    <path d="M16 17.5c2.5 0 4 1.5 4 2.5" />
+  </svg>
+);
 
 /* ─── Support cards ─────────────────────────────────────────────────────── */
 const SUPPORT_CARDS = [
@@ -33,19 +58,19 @@ const SUPPORT_CARDS = [
     iconBg: "rgba(255,122,198,0.12)",
     iconBorder: "rgba(255,122,198,0.22)",
     title: "I need emotional support",
-    subtitle: "Talk about what's bothering you.",
+    subtitle: "Talk about what's bothering you and get support.",
     prompt: "I need emotional support. I'm going through a difficult time and need someone to listen.",
   },
   {
     id: "meditation",
-    icon: Wind,
+    icon: MeditationIcon,
     color: "#A78BFA",
     bg: "rgba(167,139,250,0.06)",
     border: "rgba(167,139,250,0.15)",
     iconBg: "rgba(167,139,250,0.12)",
     iconBorder: "rgba(167,139,250,0.22)",
     title: "Guide me through meditation",
-    subtitle: "Find calm and inner peace.",
+    subtitle: "Find calm and inner peace with guided sessions.",
     prompt: "Guide me through a calming meditation session.",
   },
   {
@@ -57,7 +82,7 @@ const SUPPORT_CARDS = [
     iconBg: "rgba(77,163,255,0.12)",
     iconBorder: "rgba(77,163,255,0.22)",
     title: "Help with anxiety & stress",
-    subtitle: "Tools and exercises to feel better.",
+    subtitle: "Tools and exercises to help you feel better.",
     prompt: "I'm feeling anxious and stressed. Help me with techniques to manage these feelings.",
   },
   {
@@ -76,11 +101,11 @@ const SUPPORT_CARDS = [
 
 /* ─── Mood options ──────────────────────────────────────────────────────── */
 const MOOD_OPTIONS = [
-  { emoji: "😞", label: "sad" },
+  { emoji: "😭", label: "sad" },
   { emoji: "😟", label: "anxious" },
   { emoji: "😐", label: "neutral" },
-  { emoji: "🙂", label: "calm" },
-  { emoji: "😊", label: "happy" },
+  { emoji: "😊", label: "calm" },
+  { emoji: "😄", label: "happy" },
 ];
 
 /* ─── Static stars ──────────────────────────────────────────────────────── */
@@ -108,12 +133,11 @@ export default function HomePage() {
   const [affIdx, setAffIdx]         = useState(0);
   const [selectedMood, setSelectedMood] = useState<number | null>(null);
   const [moodLogged, setMoodLogged] = useState(false);
-  const [mounted, setMounted]       = useState(false);
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setMounted(true);
-  }, []);
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
 
   /* auto-cycle affirmations */
   useEffect(() => {
@@ -356,15 +380,18 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.28 }}
             style={{
-              fontSize: 16,
-              fontWeight: 600,
-              color: "#D9D6FF",
+              fontSize: 26,
+              fontWeight: 700,
+              color: "#EEE9FF",
               fontFamily: "'Outfit', sans-serif",
-              marginBottom: 18,
+              marginBottom: 6,
             }}
           >
             How can I support you today?
           </motion.h2>
+          <p style={{ fontSize: 14, color: "#7E86A8", marginBottom: 20 }}>
+            Choose what you need right now. You&apos;re not alone.
+          </p>
 
           {/* 4-column grid */}
           <div
@@ -399,6 +426,7 @@ export default function HomePage() {
                     flexDirection: "column",
                     justifyContent: "space-between",
                     transition: "all 0.22s ease",
+                    minHeight: 160,
                   }}
                 >
                   <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -446,7 +474,7 @@ export default function HomePage() {
                   </div>
 
                   {/* Arrow */}
-                  <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 20 }}>
+                  <div style={{ display: "flex", justifyContent: "flex-start", marginTop: 20 }}>
                     <div
                       style={{
                         width: 30,
@@ -491,6 +519,9 @@ export default function HomePage() {
               border: "1px solid rgba(139,124,255,0.1)",
               backdropFilter: "blur(16px)",
               WebkitBackdropFilter: "blur(16px)",
+              position: "relative",
+              overflow: "hidden",
+              minHeight: 200,
             }}
           >
             {/* Header */}
@@ -517,26 +548,38 @@ export default function HomePage() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
+                position: "relative",
+                zIndex: 2,
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                 {MOOD_OPTIONS.map((m, i) => (
                   <motion.button
                     key={i}
                     id={`mood-btn-${m.label}`}
                     onClick={() => setSelectedMood(i)}
-                    whileHover={{ scale: 1.15 }}
-                    whileTap={{ scale: 0.95 }}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.92 }}
                     style={{
-                      fontSize: 24,
-                      opacity: selectedMood === null ? 1 : selectedMood === i ? 1 : 0.3,
-                      transform: selectedMood === i ? "scale(1.2)" : "scale(1)",
-                      transition: "all 0.2s",
-                      background: "none",
-                      border: "none",
+                      fontSize: 22,
+                      width: 44,
+                      height: 44,
+                      borderRadius: "50%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      background:
+                        selectedMood === i
+                          ? "rgba(139,124,255,0.15)"
+                          : "rgba(255,255,255,0.04)",
+                      border:
+                        selectedMood === i
+                          ? "1.5px solid rgba(139,124,255,0.45)"
+                          : "1px solid rgba(255,255,255,0.08)",
                       cursor: "pointer",
                       padding: 0,
                       lineHeight: 1,
+                      transition: "all 0.2s",
                     }}
                     title={m.label}
                   >
@@ -552,16 +595,16 @@ export default function HomePage() {
                 onClick={handleLogMood}
                 disabled={selectedMood === null}
                 style={{
-                  padding: "9px 20px",
-                  borderRadius: 11,
+                  padding: "9px 24px",
+                  borderRadius: 99,
                   fontSize: 13,
                   fontWeight: 600,
                   background:
                     selectedMood !== null
-                      ? "linear-gradient(90deg, #7B61FF, #A78BFA)"
-                      : "rgba(139,124,255,0.08)",
-                  color: selectedMood !== null ? "#fff" : "#7E86A8",
-                  border: "1px solid rgba(139,124,255,0.2)",
+                      ? "rgba(139,124,255,0.08)"
+                      : "transparent",
+                  color: selectedMood !== null ? "#B8AEFF" : "#7E86A8",
+                  border: "1px solid rgba(139,124,255,0.25)",
                   cursor: selectedMood !== null ? "pointer" : "not-allowed",
                   transition: "all 0.2s",
                 }}
@@ -569,6 +612,47 @@ export default function HomePage() {
                 {moodLogged ? "✓ Logged!" : "Log Mood"}
               </motion.button>
             </div>
+
+            {/* Dotted wave SVG background */}
+            <svg
+              viewBox="0 0 400 80"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              style={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                width: "100%",
+                height: 80,
+                pointerEvents: "none",
+                opacity: 0.7,
+              }}
+            >
+              <defs>
+                <linearGradient id="waveFill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#8B7CFF" stopOpacity="0.12" />
+                  <stop offset="100%" stopColor="#8B7CFF" stopOpacity="0" />
+                </linearGradient>
+              </defs>
+              <path
+                d="M0 60 Q50 30 100 45 T200 25 T300 50 T400 35"
+                fill="none"
+                stroke="#8B7CFF"
+                strokeWidth="2"
+                strokeDasharray="4 4"
+                strokeOpacity="0.5"
+              />
+              <path
+                d="M0 60 Q50 30 100 45 T200 25 T300 50 T400 35 L400 80 L0 80 Z"
+                fill="url(#waveFill)"
+              />
+              <circle cx="100" cy="45" r="3" fill="#8B7CFF" opacity="0.8" />
+              <circle cx="100" cy="45" r="6" fill="#8B7CFF" opacity="0.15" />
+              <circle cx="200" cy="25" r="3" fill="#8B7CFF" opacity="0.8" />
+              <circle cx="200" cy="25" r="6" fill="#8B7CFF" opacity="0.15" />
+              <circle cx="300" cy="50" r="3" fill="#8B7CFF" opacity="0.8" />
+              <circle cx="300" cy="50" r="6" fill="#8B7CFF" opacity="0.15" />
+            </svg>
           </motion.div>
 
           {/* Journal Prompt */}
@@ -650,38 +734,136 @@ export default function HomePage() {
               Take a few moments to reflect.
             </p>
 
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, position: "relative", zIndex: 1 }}>
-              <p
+            <div style={{ display: "flex", gap: 16, position: "relative", zIndex: 1, flex: 1 }}>
+              {/* Left: Quote block */}
+              <div
                 style={{
-                  fontSize: 14,
-                  fontWeight: 500,
-                  color: "#D9D6FF",
-                  lineHeight: 1.6,
+                  flex: 1,
+                  borderRadius: 12,
+                  border: "1px solid rgba(139,124,255,0.15)",
+                  padding: "16px 18px",
+                  background: "rgba(139,124,255,0.03)",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 4,
                 }}
               >
-                &ldquo;What is one thing I can do today for my well-being?&rdquo;
-              </p>
+                <span
+                  style={{
+                    fontSize: 32,
+                    fontWeight: 700,
+                    color: "#8B7CFF",
+                    lineHeight: 1,
+                    fontFamily: "Georgia, serif",
+                  }}
+                >
+                  &ldquo;
+                </span>
+                <p
+                  style={{
+                    fontSize: 13.5,
+                    fontWeight: 500,
+                    color: "#D9D6FF",
+                    lineHeight: 1.6,
+                  }}
+                >
+                  What is one thing I can do today for my well-being?&rdquo;
+                </p>
+              </div>
 
-              <motion.button
-                id="write-journal-btn"
-                whileHover={{ scale: 1.03, boxShadow: "0 0 20px rgba(255,209,102,0.15)" }}
-                whileTap={{ scale: 0.97 }}
-                onClick={() => setActiveView("journal")}
-                style={{
-                  padding: "9px 20px",
-                  borderRadius: 11,
-                  fontSize: 13,
-                  fontWeight: 600,
-                  background: "rgba(255,209,102,0.1)",
-                  border: "1px solid rgba(255,209,102,0.22)",
-                  color: "#FFD166",
-                  cursor: "pointer",
-                  whiteSpace: "nowrap",
-                  transition: "all 0.2s",
-                }}
-              >
-                Write in Journal
-              </motion.button>
+              {/* Right: Book illustration SVG */}
+              <div style={{ width: 170, flexShrink: 0, position: "relative" }}>
+                <svg
+                  viewBox="0 0 170 150"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style={{ width: "100%", height: "100%" }}
+                >
+                  {/* Warm radial glow behind book */}
+                  <defs>
+                    <radialGradient id="bookGlow" cx="50%" cy="60%" r="50%">
+                      <stop offset="0%" stopColor="#FFB860" stopOpacity="0.25" />
+                      <stop offset="100%" stopColor="#FFB860" stopOpacity="0" />
+                    </radialGradient>
+                  </defs>
+                  <circle cx="85" cy="90" r="55" fill="url(#bookGlow)" />
+
+                  {/* Open book - left page */}
+                  <path
+                    d="M45 70 Q47 65 85 67 L85 120 Q47 118 45 113 Z"
+                    fill="#3D2E1A"
+                    stroke="#6B5030"
+                    strokeWidth="0.5"
+                  />
+                  <line x1="55" y1="80" x2="80" y2="78" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.6" />
+                  <line x1="55" y1="87" x2="80" y2="85" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.5" />
+                  <line x1="55" y1="94" x2="80" y2="92" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.4" />
+                  <line x1="55" y1="101" x2="75" y2="99" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.3" />
+
+                  {/* Open book - right page */}
+                  <path
+                    d="M85 67 Q123 65 125 70 L125 113 Q123 118 85 120 Z"
+                    fill="#4A3620"
+                    stroke="#6B5030"
+                    strokeWidth="0.5"
+                  />
+                  <line x1="90" y1="78" x2="120" y2="80" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.6" />
+                  <line x1="90" y1="85" x2="120" y2="87" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.5" />
+                  <line x1="90" y1="92" x2="120" y2="94" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.4" />
+                  <line x1="90" y1="99" x2="115" y2="101" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.3" />
+
+                  {/* Book spine */}
+                  <line x1="85" y1="65" x2="85" y2="121" stroke="#6B5030" strokeWidth="1" />
+
+                  {/* Crescent moon */}
+                  <circle cx="110" cy="32" r="10" fill="#FFC966" />
+                  <circle cx="115" cy="29" r="8" fill="#0F1525" />
+
+                  {/* Stars */}
+                  <circle cx="60" cy="28" r="1.5" fill="#FFD166" opacity="0.9" />
+                  <circle cx="60" cy="28" r="3.5" fill="#FFD166" opacity="0.15" />
+                  <circle cx="135" cy="48" r="1" fill="#FFD166" opacity="0.7" />
+                  <circle cx="135" cy="48" r="2.5" fill="#FFD166" opacity="0.1" />
+                  <circle cx="75" cy="18" r="1" fill="#FFD166" opacity="0.8" />
+                  <circle cx="125" cy="22" r="1.2" fill="#FFD166" opacity="0.6" />
+                  <circle cx="50" cy="48" r="0.8" fill="#FFD166" opacity="0.5" />
+
+                  {/* Plant leaves */}
+                  <path d="M140 150 Q145 125 135 108" fill="none" stroke="#2D5A3D" strokeWidth="1.5" />
+                  <path d="M135 108 Q128 103 122 108 Q128 110 135 108" fill="#2D5A3D" />
+                  <path d="M138 118 Q132 113 128 118 Q132 121 138 118" fill="#3A7050" />
+                  <path d="M142 128 Q148 123 152 126 Q148 130 142 128" fill="#2D5A3D" />
+                </svg>
+
+                {/* Write in Journal button */}
+                <motion.button
+                  id="write-journal-btn"
+                  whileHover={{
+                    scale: 1.04,
+                    boxShadow: "0 4px 20px rgba(255,201,102,0.25)",
+                  }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={() => setActiveView("journal")}
+                  style={{
+                    position: "absolute",
+                    bottom: 0,
+                    right: 0,
+                    padding: "9px 22px",
+                    borderRadius: 99,
+                    fontSize: 13,
+                    fontWeight: 600,
+                    background: "#FFC966",
+                    border: "none",
+                    color: "#0F0F1A",
+                    cursor: "pointer",
+                    whiteSpace: "nowrap",
+                    transition: "all 0.2s",
+                    zIndex: 2,
+                  }}
+                >
+                  Write in Journal
+                </motion.button>
+              </div>
             </div>
           </motion.div>
         </div>
@@ -702,7 +884,8 @@ export default function HomePage() {
             paddingBottom: 16,
           }}
         >
-          <Shield size={12} />
+          <Heart size={12} fill="#485070" style={{ opacity: 0.8 }} />
+          <span>You matter. Take things one step at a time.</span>
         </motion.p>
       </div>
     </div>
