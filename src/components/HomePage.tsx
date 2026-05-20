@@ -110,7 +110,10 @@ export default function HomePage() {
   const [moodLogged, setMoodLogged] = useState(false);
   const [mounted, setMounted]       = useState(false);
 
-  useEffect(() => { setMounted(true); }, []);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
 
   /* auto-cycle affirmations */
   useEffect(() => {
@@ -168,7 +171,7 @@ export default function HomePage() {
             position: "absolute",
             inset: 0,
             background:
-              "linear-gradient(to bottom, rgba(7,13,36,0.05) 0%, rgba(7,13,36,0.65) 100%)",
+              "linear-gradient(to bottom, rgba(5,8,22,0) 60%, #050816 100%)",
             pointerEvents: "none",
           }}
         />
@@ -339,11 +342,12 @@ export default function HomePage() {
             />
           </motion.div>
         </div>
+      </div>
 
-        {/* ════════════════════════════════════════════════════════════════
-            MAIN CONTENT
-        ════════════════════════════════════════════════════════════════ */}
-        <div style={{ position: "relative", zIndex: 10, padding: "0 48px 40px 48px" }}>
+      {/* ════════════════════════════════════════════════════════════════
+          MAIN CONTENT
+      ════════════════════════════════════════════════════════════════ */}
+      <div style={{ position: "relative", zIndex: 10, padding: "24px 48px 40px 48px" }}>
 
         {/* ── Support cards section ──────────────────────────────────── */}
         <section>
@@ -699,9 +703,7 @@ export default function HomePage() {
           }}
         >
           <Shield size={12} />
-          Sattav AI can make mistakes. Always seek professional help for serious concerns.
         </motion.p>
-        </div>
       </div>
     </div>
   );

@@ -38,13 +38,16 @@ export default function Sidebar() {
   const searchRef = useRef<HTMLInputElement>(null);
   const [mounted, setMounted] = useState(false);
   const isResizing = useRef(false);
+  const [isResizingState, setIsResizingState] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     isResizing.current = true;
+    setIsResizingState(true);
     document.body.style.cursor = "col-resize";
     document.body.style.userSelect = "none";
 
@@ -65,6 +68,7 @@ export default function Sidebar() {
 
     const handleMouseUp = () => {
       isResizing.current = false;
+      setIsResizingState(false);
       document.body.style.cursor = "";
       document.body.style.userSelect = "";
       document.removeEventListener("mousemove", handleMouseMove);
@@ -105,7 +109,7 @@ export default function Sidebar() {
         className="fixed left-0 top-0 h-full z-30 overflow-hidden"
         style={{
           width: sidebarOpen ? sidebarWidth : 0,
-          transition: isResizing.current ? "none" : "width 0.28s cubic-bezier(0.4,0,0.2,1)",
+          transition: isResizingState ? "none" : "width 0.28s cubic-bezier(0.4,0,0.2,1)",
         }}
       >
         <motion.aside
@@ -161,46 +165,29 @@ export default function Sidebar() {
                 BRAND HEADER
             ────────────────────────────────────────────────────────────── */}
             <div
-              className="flex items-center gap-4 flex-shrink-0"
+              className="flex items-center gap-3 flex-shrink-0"
               style={{ padding: "28px 24px 20px 24px" }}
             >
-              {/* Glowing orb logo */}
-              <div
-                className="relative flex-shrink-0 flex items-center justify-center"
+              {/* Logo only */}
+              <img
+                src="/logo.png"
+                alt="Sattav AI"
+                width={64}
+                height={64}
+                className="object-contain logo-glow"
                 style={{
-                  width: 44, height: 44,
-                  borderRadius: "50%",
-                  background: "linear-gradient(145deg, #201960 0%, #2f248a 55%, #1c164e 100%)",
-                  border: "1.5px solid rgba(139,124,255,0.32)",
-                  boxShadow:
-                    "0 0 20px rgba(83,64,200,0.55), 0 0 8px rgba(139,124,255,0.3) inset",
+                  filter: "drop-shadow(0 0 12px rgba(139,124,255,0.9)) brightness(1.3)",
                 }}
-              >
-                <img
-                  src="/logo.png"
-                  alt="Sattav AI"
-                  width={24}
-                  height={24}
-                  className="object-contain"
-                  style={{ filter: "drop-shadow(0 0 7px rgba(160,140,255,0.9))" }}
-                />
-                <span
-                  className="absolute inset-0 rounded-full animate-ping"
-                  style={{
-                    background: "rgba(83,64,200,0.18)",
-                    animationDuration: "3.2s",
-                  }}
-                />
-              </div>
+              />
 
-              {/* Brand name */}
-              <div className="flex flex-col" style={{ gap: 3 }}>
+              {/* Brand text */}
+              <div className="flex flex-col leading-none" style={{ gap: 4 }}>
                 <span
                   style={{
                     fontFamily: "'Outfit', sans-serif",
-                    fontSize: 22,
+                    fontSize: 26,
                     fontWeight: 700,
-                    color: "#EAE6FF",
+                    color: "#E8DFFF",
                     letterSpacing: "-0.01em",
                     lineHeight: 1,
                   }}
@@ -209,10 +196,11 @@ export default function Sidebar() {
                 </span>
                 <span
                   style={{
-                    fontSize: 10,
+                    fontFamily: "'Outfit', sans-serif",
+                    fontSize: 10.5,
                     fontWeight: 600,
-                    color: "#4a5178",
-                    letterSpacing: "0.26em",
+                    color: "#6B5FA0",
+                    letterSpacing: "0.28em",
                     textTransform: "uppercase",
                     lineHeight: 1,
                   }}
