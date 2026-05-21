@@ -12,15 +12,11 @@ import {
 } from "lucide-react";
 import { useChatStore } from "@/store/chatStore";
 
-/* ─── Affirmations ──────────────────────────────────────────────────────── */
-const AFFIRMATIONS = [
-  "\"You are enough, exactly as you are right now.\" 💙",
-  "\"Every breath you take is a step toward healing.\" 🌿",
-  "\"Your feelings are valid. You deserve peace.\" ✨",
-];
-
-/* ─── Meditation Lotus Icon ─────────────────────────────────────────── */
-const MeditationIcon = ({ size = 22, ...props }: { size?: number } & React.SVGProps<SVGSVGElement>) => (
+/* ─── Meditation Lotus Icon ─────────────────────────────────────── */
+const MeditationIcon = ({
+  size = 22,
+  ...props
+}: { size?: number } & React.SVGProps<SVGSVGElement>) => (
   <svg
     width={size}
     height={size}
@@ -32,43 +28,44 @@ const MeditationIcon = ({ size = 22, ...props }: { size?: number } & React.SVGPr
     strokeLinejoin="round"
     {...props}
   >
-    {/* Head */}
     <circle cx="12" cy="5" r="2" />
-    {/* Arms in gyan mudra */}
     <path d="M6 14c0-3.5 3-4.5 6-4.5s6 1 6 4.5" />
     <path d="M6 14a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
     <path d="M21 14a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
-    {/* Torso/Spine */}
     <path d="M12 7v7" />
-    {/* Lotus pose legs */}
     <path d="M4 20c2-1 4-2.5 8-2.5s6 1.5 8 2.5" />
     <path d="M8 17.5c-2.5 0-4 1.5-4 2.5" />
     <path d="M16 17.5c2.5 0 4 1.5 4 2.5" />
   </svg>
 );
 
-/* ─── Support cards ─────────────────────────────────────────────────────── */
+/* ─── Support cards ─────────────────────────────────────────────── */
 const SUPPORT_CARDS = [
   {
     id: "emotional",
     icon: Heart,
     color: "#FF7AC6",
-    bg: "rgba(255,122,198,0.06)",
-    border: "rgba(255,122,198,0.15)",
-    iconBg: "rgba(255,122,198,0.12)",
-    iconBorder: "rgba(255,122,198,0.22)",
+    bg: "rgba(255,122,198,0.07)",
+    border: "rgba(255,122,198,0.18)",
+    iconBg: "rgba(255,122,198,0.13)",
+    iconBorder: "rgba(255,122,198,0.25)",
+    arrowBg: "rgba(255,122,198,0.1)",
+    arrowBorder: "rgba(255,122,198,0.2)",
     title: "I need emotional support",
     subtitle: "Talk about what's bothering you and get support.",
-    prompt: "I need emotional support. I'm going through a difficult time and need someone to listen.",
+    prompt:
+      "I need emotional support. I'm going through a difficult time and need someone to listen.",
   },
   {
     id: "meditation",
     icon: MeditationIcon,
     color: "#A78BFA",
-    bg: "rgba(167,139,250,0.06)",
-    border: "rgba(167,139,250,0.15)",
-    iconBg: "rgba(167,139,250,0.12)",
-    iconBorder: "rgba(167,139,250,0.22)",
+    bg: "rgba(167,139,250,0.07)",
+    border: "rgba(167,139,250,0.18)",
+    iconBg: "rgba(167,139,250,0.13)",
+    iconBorder: "rgba(167,139,250,0.25)",
+    arrowBg: "rgba(167,139,250,0.1)",
+    arrowBorder: "rgba(167,139,250,0.2)",
     title: "Guide me through meditation",
     subtitle: "Find calm and inner peace with guided sessions.",
     prompt: "Guide me through a calming meditation session.",
@@ -77,29 +74,35 @@ const SUPPORT_CARDS = [
     id: "anxiety",
     icon: Brain,
     color: "#4DA3FF",
-    bg: "rgba(77,163,255,0.06)",
-    border: "rgba(77,163,255,0.15)",
-    iconBg: "rgba(77,163,255,0.12)",
-    iconBorder: "rgba(77,163,255,0.22)",
+    bg: "rgba(77,163,255,0.07)",
+    border: "rgba(77,163,255,0.18)",
+    iconBg: "rgba(77,163,255,0.13)",
+    iconBorder: "rgba(77,163,255,0.25)",
+    arrowBg: "rgba(77,163,255,0.1)",
+    arrowBorder: "rgba(77,163,255,0.2)",
     title: "Help with anxiety & stress",
     subtitle: "Tools and exercises to help you feel better.",
-    prompt: "I'm feeling anxious and stressed. Help me with techniques to manage these feelings.",
+    prompt:
+      "I'm feeling anxious and stressed. Help me with techniques to manage these feelings.",
   },
   {
     id: "affirmation",
     icon: Sparkles,
     color: "#FFD166",
-    bg: "rgba(255,209,102,0.06)",
-    border: "rgba(255,209,102,0.15)",
-    iconBg: "rgba(255,209,102,0.12)",
-    iconBorder: "rgba(255,209,102,0.22)",
+    bg: "rgba(255,209,102,0.07)",
+    border: "rgba(255,209,102,0.18)",
+    iconBg: "rgba(255,209,102,0.13)",
+    iconBorder: "rgba(255,209,102,0.25)",
+    arrowBg: "rgba(255,209,102,0.1)",
+    arrowBorder: "rgba(255,209,102,0.2)",
     title: "Give me an affirmation",
     subtitle: "Uplift your mind with positive words.",
-    prompt: "Give me some powerful affirmations to boost my confidence and mental wellbeing.",
+    prompt:
+      "Give me some powerful affirmations to boost my confidence and mental wellbeing.",
   },
 ];
 
-/* ─── Mood options ──────────────────────────────────────────────────────── */
+/* ─── Mood options ──────────────────────────────────────────────── */
 const MOOD_OPTIONS = [
   { emoji: "😭", label: "sad" },
   { emoji: "😟", label: "anxious" },
@@ -108,42 +111,12 @@ const MOOD_OPTIONS = [
   { emoji: "😄", label: "happy" },
 ];
 
-/* ─── Static stars ──────────────────────────────────────────────────────── */
-const STARS = [
-  { w: 2, h: 2, l: 5,  t: 10, o: 0.35, dur: 3.2, delay: 0.5  },
-  { w: 1, h: 1, l: 12, t: 22, o: 0.5,  dur: 2.5, delay: 1.2  },
-  { w: 2, h: 2, l: 20, t: 8,  o: 0.25, dur: 4.0, delay: 0.0  },
-  { w: 1, h: 1, l: 28, t: 38, o: 0.4,  dur: 3.5, delay: 2.1  },
-  { w: 2, h: 2, l: 35, t: 14, o: 0.3,  dur: 2.8, delay: 0.8  },
-  { w: 1, h: 1, l: 42, t: 28, o: 0.55, dur: 3.0, delay: 1.5  },
-  { w: 2, h: 2, l: 52, t: 6,  o: 0.2,  dur: 4.5, delay: 0.3  },
-  { w: 1, h: 1, l: 60, t: 45, o: 0.45, dur: 2.6, delay: 2.8  },
-  { w: 2, h: 2, l: 68, t: 18, o: 0.3,  dur: 3.8, delay: 1.0  },
-  { w: 1, h: 1, l: 76, t: 32, o: 0.5,  dur: 3.1, delay: 0.6  },
-  { w: 2, h: 2, l: 84, t: 11, o: 0.25, dur: 4.2, delay: 1.9  },
-  { w: 1, h: 1, l: 90, t: 42, o: 0.6,  dur: 2.9, delay: 2.4  },
-  { w: 1, h: 1, l: 16, t: 52, o: 0.35, dur: 3.7, delay: 1.7  },
-  { w: 2, h: 2, l: 44, t: 55, o: 0.28, dur: 2.7, delay: 2.0  },
-  { w: 1, h: 1, l: 72, t: 50, o: 0.45, dur: 4.1, delay: 0.9  },
-];
-
-/* ─── Main component ─────────────────────────────────────────────────────── */
+/* ─── Main component ─────────────────────────────────────────────── */
 export default function HomePage() {
-  const { createNewSession, setActiveSession, setActiveView, addMoodEntry } = useChatStore();
-  const [affIdx, setAffIdx]         = useState(0);
+  const { createNewSession, setActiveSession, setActiveView, addMoodEntry } =
+    useChatStore();
   const [selectedMood, setSelectedMood] = useState<number | null>(null);
   const [moodLogged, setMoodLogged] = useState(false);
-  const mounted = useSyncExternalStore(
-    () => () => {},
-    () => true,
-    () => false
-  );
-
-  /* auto-cycle affirmations */
-  useEffect(() => {
-    const t = setInterval(() => setAffIdx((i) => (i + 1) % AFFIRMATIONS.length), 4500);
-    return () => clearInterval(t);
-  }, []);
 
   const startChat = (prompt: string) => {
     const id = createNewSession();
@@ -163,374 +136,195 @@ export default function HomePage() {
   return (
     <div
       className="relative flex-1 h-full custom-scroll"
-      style={{ overflowY: "auto", overflowX: "hidden" }}
+      style={{
+        overflowY: "auto",
+        overflowX: "hidden",
+        background: "linear-gradient(180deg, #141929 0%, #111523 100%)",
+      }}
     >
-
-      {/* ════════════════════════════════════════════════════════════════
-          HERO SECTION
-      ════════════════════════════════════════════════════════════════ */}
+      {/* ── Main content wrapper ── */}
       <div
         style={{
-          position: "relative",
-          overflow: "hidden",
-          minHeight: 460,
-          background:
-            "linear-gradient(160deg, #070D24 0%, #0C1535 30%, #151040 55%, #1A0E3A 75%, #0B0620 100%)",
+          maxWidth: 1100,
+          margin: "0 auto",
+          padding: "76px 32px 32px 32px",
         }}
       >
-        {/* Background image */}
-        <div
+        {/* ── Section heading ── */}
+        <motion.h1
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 }}
           style={{
-            position: "absolute",
-            inset: 0,
-            backgroundImage: "url('/background_HomePage.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center top",
-            opacity: 0.6,
-          }}
-        />
-        {/* Bottom fade */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "linear-gradient(to bottom, rgba(5,8,22,0) 60%, #050816 100%)",
-            pointerEvents: "none",
-          }}
-        />
-
-        {/* Stars */}
-        {mounted && (
-          <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none" }}>
-            {STARS.map((s, i) => (
-              <motion.div
-                key={i}
-                style={{
-                  position: "absolute",
-                  borderRadius: "50%",
-                  backgroundColor: "white",
-                  width: s.w,
-                  height: s.h,
-                  left: `${s.l}%`,
-                  top: `${s.t}%`,
-                }}
-                animate={{ opacity: [s.o * 0.3, s.o, s.o * 0.3] }}
-                transition={{ duration: s.dur, repeat: Infinity, delay: s.delay }}
-              />
-            ))}
-          </div>
-        )}
-
-        {/* Hero content */}
-        <div
-          style={{
-            position: "relative",
-            zIndex: 10,
-            display: "flex",
-            alignItems: "flex-start",
-            justifyContent: "space-between",
-            padding: "84px 48px 40px 48px",
-            gap: 32,
+            fontFamily: "'Outfit', sans-serif",
+            fontSize: 28,
+            fontWeight: 700,
+            color: "#EDEAFF",
+            marginBottom: 6,
+            letterSpacing: "-0.01em",
           }}
         >
-          {/* LEFT: text + affirmation */}
-          <div style={{ flex: 1, maxWidth: 580 }}>
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.08 }}
-              style={{ fontSize: 15.5, color: "#B0B5D0", marginBottom: 10 }}
-            >
-              Welcome back 👋
-            </motion.p>
+          How can I support you today?
+        </motion.h1>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.16 }}
-              style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: 36,
-                fontWeight: 700,
-                color: "#EEE9FF",
-                lineHeight: 1.15,
-                marginBottom: 16,
-                letterSpacing: "-0.01em",
-              }}
-            >
-              Your safe space to breathe &amp; heal
-            </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          style={{
+            fontSize: 14,
+            color: "#6B7299",
+            marginBottom: 24,
+          }}
+        >
+          Choose what you need right now. You&apos;re not alone.
+        </motion.p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.24 }}
-            >
-              <p style={{ fontSize: 14, lineHeight: 1.65, color: "#8B90B0", marginBottom: 2 }}>
-                I&apos;m Sattav, your compassionate AI wellness companion.
-              </p>
-              <p style={{ fontSize: 14, lineHeight: 1.65, color: "#8B90B0" }}>
-                Share what&apos;s on your mind — I&apos;m here to listen, support, and guide you toward calm.
-              </p>
-            </motion.div>
-
-            {/* Affirmation card */}
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.32 }}
-              style={{
-                marginTop: 28,
-                borderRadius: 16,
-                padding: "18px 22px",
-                background: "rgba(10,14,36,0.55)",
-                border: "1px solid rgba(139,124,255,0.12)",
-                backdropFilter: "blur(24px)",
-                WebkitBackdropFilter: "blur(24px)",
-                maxWidth: 500,
-              }}
-            >
-              <p
+        {/* ── 4-column support cards ── */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(4, 1fr)",
+            gap: 14,
+            marginBottom: 14,
+          }}
+          className="support-grid"
+        >
+          {SUPPORT_CARDS.map((card, idx) => {
+            const Icon = card.icon;
+            return (
+              <motion.button
+                key={card.id}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.12 + idx * 0.07 }}
+                whileHover={{
+                  y: -3,
+                  transition: { duration: 0.18 },
+                  boxShadow: `0 10px 30px rgba(0,0,0,0.35)`,
+                }}
+                whileTap={{ scale: 0.985 }}
+                onClick={() => startChat(card.prompt)}
+                className={`support-card-${card.id}`}
                 style={{
-                  fontSize: 10,
-                  fontWeight: 700,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.18em",
-                  color: "#9097C0",
-                  marginBottom: 12,
+                  position: "relative",
+                  textAlign: "left",
+                  borderRadius: 16,
+                  background: card.bg,
+                  border: `1px solid ${card.border}`,
+                  padding: "20px 18px",
+                  cursor: "pointer",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  transition: "all 0.22s ease",
+                  minHeight: 185,
                 }}
               >
-                Today&apos;s Affirmation ✨
-              </p>
-              <AnimatePresence mode="wait">
-                <motion.p
-                  key={affIdx}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.38 }}
-                  style={{
-                    fontSize: 15.5,
-                    fontWeight: 500,
-                    lineHeight: 1.6,
-                    color: "#D9D6FF",
-                    fontFamily: "'Outfit', sans-serif",
-                  }}
-                >
-                  {AFFIRMATIONS[affIdx]}
-                </motion.p>
-              </AnimatePresence>
-
-              {/* Dot pagination */}
-              <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 14 }}>
-                {AFFIRMATIONS.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setAffIdx(i)}
-                    aria-label={`Affirmation ${i + 1}`}
+                {/* Icon + Title */}
+                <div style={{ display: "flex", alignItems: "flex-start", gap: 14 }}>
+                  {/* Icon badge */}
+                  <div
                     style={{
-                      borderRadius: 99,
-                      transition: "all 0.3s",
-                      width: i === affIdx ? 22 : 7,
-                      height: 7,
-                      background:
-                        i === affIdx ? "#8B7CFF" : "rgba(139,124,255,0.25)",
-                      border: "none",
-                      cursor: "pointer",
-                      padding: 0,
+                      width: 44,
+                      height: 44,
+                      borderRadius: "50%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
+                      background: card.iconBg,
+                      border: `1px solid ${card.iconBorder}`,
                     }}
-                  />
-                ))}
-              </div>
-            </motion.div>
-          </div>
+                  >
+                    <Icon size={22} style={{ color: card.color }} />
+                  </div>
+                  {/* Title */}
+                  <p
+                    style={{
+                      fontSize: 14.5,
+                      fontWeight: 700,
+                      lineHeight: 1.35,
+                      color: "#EDEAFF",
+                      marginTop: 2,
+                    }}
+                  >
+                    {card.title}
+                  </p>
+                </div>
 
-          {/* RIGHT: Robot illustration */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ delay: 0.28, duration: 0.65 }}
-            className="hidden lg:block"
-            style={{ flexShrink: 0, width: 320, marginTop: 12 }}
-          >
-            <img
-              src="/meditation_robot.png"
-              alt="Sattav AI meditation companion"
-              style={{
-                width: "100%",
-                height: "auto",
-                filter:
-                  "drop-shadow(0 0 32px rgba(139,124,255,0.25)) drop-shadow(0 0 8px rgba(139,124,255,0.1))",
-              }}
-            />
-          </motion.div>
-        </div>
-      </div>
-
-      {/* ════════════════════════════════════════════════════════════════
-          MAIN CONTENT
-      ════════════════════════════════════════════════════════════════ */}
-      <div style={{ position: "relative", zIndex: 10, padding: "24px 48px 40px 48px" }}>
-
-        {/* ── Support cards section ──────────────────────────────────── */}
-        <section>
-          <motion.h2
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.28 }}
-            style={{
-              fontSize: 26,
-              fontWeight: 700,
-              color: "#EEE9FF",
-              fontFamily: "'Outfit', sans-serif",
-              marginBottom: 6,
-            }}
-          >
-            How can I support you today?
-          </motion.h2>
-          <p style={{ fontSize: 14, color: "#7E86A8", marginBottom: 20 }}>
-            Choose what you need right now. You&apos;re not alone.
-          </p>
-
-          {/* 4-column grid */}
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(4, 1fr)",
-              gap: 14,
-            }}
-            className="support-grid"
-          >
-            {SUPPORT_CARDS.map((card, idx) => {
-              const Icon = card.icon;
-              return (
-                <motion.button
-                  key={card.id}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.32 + idx * 0.07 }}
-                  whileHover={{ y: -3, transition: { duration: 0.18 }, boxShadow: `0 8px 24px ${card.bg}` }}
-                  whileTap={{ scale: 0.985 }}
-                  onClick={() => startChat(card.prompt)}
-                  className={`support-card-${card.id}`}
+                {/* Subtitle */}
+                <p
                   style={{
-                    position: "relative",
-                    textAlign: "left",
-                    borderRadius: 16,
-                    background: card.bg,
-                    border: `1px solid ${card.border}`,
-                    padding: "20px 18px",
-                    cursor: "pointer",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    transition: "all 0.22s ease",
-                    minHeight: 160,
+                    fontSize: 13,
+                    lineHeight: 1.55,
+                    color: "#6B7299",
+                    marginTop: 14,
                   }}
                 >
-                  <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                    {/* Icon + Title row */}
-                    <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                      {/* Icon badge */}
-                      <div
-                        style={{
-                          width: 44,
-                          height: 44,
-                          borderRadius: "50%",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          flexShrink: 0,
-                          background: card.iconBg,
-                          border: `1px solid ${card.iconBorder}`,
-                        }}
-                      >
-                        <Icon size={22} style={{ color: card.color }} />
-                      </div>
-                      {/* Title */}
-                      <p
-                        style={{
-                          fontSize: 14.5,
-                          fontWeight: 600,
-                          lineHeight: 1.35,
-                          color: "#D9D6FF",
-                        }}
-                      >
-                        {card.title}
-                      </p>
-                    </div>
+                  {card.subtitle}
+                </p>
 
-                    {/* Subtitle */}
-                    <p
-                      style={{
-                        fontSize: 13,
-                        lineHeight: 1.5,
-                        color: "#7E86A8",
-                      }}
-                    >
-                      {card.subtitle}
-                    </p>
+                {/* Arrow button */}
+                <div style={{ marginTop: 20 }}>
+                  <div
+                    style={{
+                      width: 32,
+                      height: 32,
+                      borderRadius: "50%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      background: card.arrowBg,
+                      border: `1px solid ${card.arrowBorder}`,
+                    }}
+                  >
+                    <ArrowRight size={14} style={{ color: card.color }} />
                   </div>
+                </div>
+              </motion.button>
+            );
+          })}
+        </div>
 
-                  {/* Arrow */}
-                  <div style={{ display: "flex", justifyContent: "flex-start", marginTop: 20 }}>
-                    <div
-                      style={{
-                        width: 30,
-                        height: 30,
-                        borderRadius: "50%",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        background: `${card.color}14`,
-                        border: `1px solid ${card.color}22`,
-                      }}
-                    >
-                      <ArrowRight size={14} style={{ color: card.color }} />
-                    </div>
-                  </div>
-                </motion.button>
-              );
-            })}
-          </div>
-        </section>
-
-        {/* ── Bottom 2-column widgets ───────────────────────────────── */}
+        {/* ── Bottom 2-column widgets ── */}
         <div
           style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
             gap: 14,
-            marginTop: 22,
           }}
           className="widgets-grid"
         >
-
           {/* Daily Mood Tracker */}
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.52 }}
+            transition={{ delay: 0.42 }}
             style={{
               borderRadius: 16,
               padding: "22px 24px",
-              background: "rgba(10,13,32,0.65)",
-              border: "1px solid rgba(139,124,255,0.1)",
-              backdropFilter: "blur(16px)",
-              WebkitBackdropFilter: "blur(16px)",
+              background: "rgba(255,255,255,0.03)",
+              border: "1px solid rgba(255,255,255,0.07)",
               position: "relative",
               overflow: "hidden",
-              minHeight: 200,
+              minHeight: 160,
             }}
           >
             {/* Header */}
-            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 5 }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                marginBottom: 4,
+              }}
+            >
               <TrendingUp size={15} style={{ color: "#8B7CFF" }} />
               <span
                 style={{
                   fontSize: 14,
-                  fontWeight: 600,
+                  fontWeight: 700,
                   color: "#8B7CFF",
                   fontFamily: "'Outfit', sans-serif",
                 }}
@@ -538,7 +332,13 @@ export default function HomePage() {
                 Daily Mood Tracker
               </span>
             </div>
-            <p style={{ fontSize: 12.5, color: "#7E86A8", marginBottom: 22 }}>
+            <p
+              style={{
+                fontSize: 12.5,
+                color: "#6B7299",
+                marginBottom: 22,
+              }}
+            >
               Track your mood and patterns over time.
             </p>
 
@@ -552,14 +352,14 @@ export default function HomePage() {
                 zIndex: 2,
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 {MOOD_OPTIONS.map((m, i) => (
                   <motion.button
                     key={i}
                     id={`mood-btn-${m.label}`}
                     onClick={() => setSelectedMood(i)}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.92 }}
+                    whileHover={{ scale: 1.15 }}
+                    whileTap={{ scale: 0.9 }}
                     style={{
                       fontSize: 22,
                       width: 44,
@@ -570,12 +370,12 @@ export default function HomePage() {
                       justifyContent: "center",
                       background:
                         selectedMood === i
-                          ? "rgba(139,124,255,0.15)"
+                          ? "rgba(139,124,255,0.18)"
                           : "rgba(255,255,255,0.04)",
                       border:
                         selectedMood === i
-                          ? "1.5px solid rgba(139,124,255,0.45)"
-                          : "1px solid rgba(255,255,255,0.08)",
+                          ? "1.5px solid rgba(139,124,255,0.5)"
+                          : "1px solid rgba(255,255,255,0.07)",
                       cursor: "pointer",
                       padding: 0,
                       lineHeight: 1,
@@ -595,27 +395,28 @@ export default function HomePage() {
                 onClick={handleLogMood}
                 disabled={selectedMood === null}
                 style={{
-                  padding: "9px 24px",
+                  padding: "9px 22px",
                   borderRadius: 99,
                   fontSize: 13,
                   fontWeight: 600,
                   background:
                     selectedMood !== null
-                      ? "rgba(139,124,255,0.08)"
+                      ? "rgba(139,124,255,0.12)"
                       : "transparent",
-                  color: selectedMood !== null ? "#B8AEFF" : "#7E86A8",
-                  border: "1px solid rgba(139,124,255,0.25)",
+                  color: selectedMood !== null ? "#B8AEFF" : "#4A5070",
+                  border: "1px solid rgba(139,124,255,0.28)",
                   cursor: selectedMood !== null ? "pointer" : "not-allowed",
                   transition: "all 0.2s",
+                  whiteSpace: "nowrap",
                 }}
               >
                 {moodLogged ? "✓ Logged!" : "Log Mood"}
               </motion.button>
             </div>
 
-            {/* Dotted wave SVG background */}
+            {/* Dotted wave SVG */}
             <svg
-              viewBox="0 0 400 80"
+              viewBox="0 0 400 70"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
               style={{
@@ -623,35 +424,35 @@ export default function HomePage() {
                 bottom: 0,
                 left: 0,
                 width: "100%",
-                height: 80,
+                height: 70,
                 pointerEvents: "none",
-                opacity: 0.7,
+                opacity: 0.65,
               }}
             >
               <defs>
-                <linearGradient id="waveFill" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#8B7CFF" stopOpacity="0.12" />
+                <linearGradient id="waveFill2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#8B7CFF" stopOpacity="0.1" />
                   <stop offset="100%" stopColor="#8B7CFF" stopOpacity="0" />
                 </linearGradient>
               </defs>
               <path
-                d="M0 60 Q50 30 100 45 T200 25 T300 50 T400 35"
+                d="M0 50 Q50 22 100 38 T200 18 T300 42 T400 28"
                 fill="none"
                 stroke="#8B7CFF"
                 strokeWidth="2"
-                strokeDasharray="4 4"
-                strokeOpacity="0.5"
+                strokeDasharray="5 5"
+                strokeOpacity="0.45"
               />
               <path
-                d="M0 60 Q50 30 100 45 T200 25 T300 50 T400 35 L400 80 L0 80 Z"
-                fill="url(#waveFill)"
+                d="M0 50 Q50 22 100 38 T200 18 T300 42 T400 28 L400 70 L0 70 Z"
+                fill="url(#waveFill2)"
               />
-              <circle cx="100" cy="45" r="3" fill="#8B7CFF" opacity="0.8" />
-              <circle cx="100" cy="45" r="6" fill="#8B7CFF" opacity="0.15" />
-              <circle cx="200" cy="25" r="3" fill="#8B7CFF" opacity="0.8" />
-              <circle cx="200" cy="25" r="6" fill="#8B7CFF" opacity="0.15" />
-              <circle cx="300" cy="50" r="3" fill="#8B7CFF" opacity="0.8" />
-              <circle cx="300" cy="50" r="6" fill="#8B7CFF" opacity="0.15" />
+              <circle cx="100" cy="38" r="3" fill="#8B7CFF" opacity="0.75" />
+              <circle cx="100" cy="38" r="6" fill="#8B7CFF" opacity="0.12" />
+              <circle cx="200" cy="18" r="3" fill="#8B7CFF" opacity="0.75" />
+              <circle cx="200" cy="18" r="6" fill="#8B7CFF" opacity="0.12" />
+              <circle cx="300" cy="42" r="3" fill="#8B7CFF" opacity="0.75" />
+              <circle cx="300" cy="42" r="6" fill="#8B7CFF" opacity="0.12" />
             </svg>
           </motion.div>
 
@@ -659,42 +460,29 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
+            transition={{ delay: 0.5 }}
             style={{
               borderRadius: 16,
               padding: "22px 24px",
               position: "relative",
               overflow: "hidden",
-              background: "rgba(10,13,32,0.65)",
-              border: "1px solid rgba(139,124,255,0.1)",
-              backdropFilter: "blur(16px)",
-              WebkitBackdropFilter: "blur(16px)",
+              background: "rgba(255,255,255,0.03)",
+              border: "1px solid rgba(255,255,255,0.07)",
+              display: "flex",
+              flexDirection: "column",
             }}
           >
-            {/* Warm amber glow accent */}
+            {/* Warm amber glow */}
             <div
               style={{
                 position: "absolute",
-                right: -30,
-                bottom: -30,
-                width: 200,
-                height: 200,
+                right: -20,
+                bottom: -20,
+                width: 220,
+                height: 220,
                 borderRadius: "50%",
                 background:
-                  "radial-gradient(circle, rgba(255,180,80,0.12) 0%, rgba(255,120,40,0.06) 50%, transparent 70%)",
-                pointerEvents: "none",
-              }}
-            />
-            {/* Extra warm glow top-right */}
-            <div
-              style={{
-                position: "absolute",
-                right: 0,
-                top: 0,
-                width: 160,
-                height: 160,
-                background:
-                  "radial-gradient(circle, rgba(255,150,60,0.07) 0%, transparent 70%)",
+                  "radial-gradient(circle, rgba(255,180,80,0.14) 0%, rgba(255,120,40,0.07) 50%, transparent 70%)",
                 pointerEvents: "none",
               }}
             />
@@ -705,7 +493,7 @@ export default function HomePage() {
                 display: "flex",
                 alignItems: "center",
                 gap: 8,
-                marginBottom: 5,
+                marginBottom: 4,
                 position: "relative",
                 zIndex: 1,
               }}
@@ -714,7 +502,7 @@ export default function HomePage() {
               <span
                 style={{
                   fontSize: 14,
-                  fontWeight: 600,
+                  fontWeight: 700,
                   color: "#FFD166",
                   fontFamily: "'Outfit', sans-serif",
                 }}
@@ -725,7 +513,7 @@ export default function HomePage() {
             <p
               style={{
                 fontSize: 12.5,
-                color: "#7E86A8",
+                color: "#6B7299",
                 marginBottom: 16,
                 position: "relative",
                 zIndex: 1,
@@ -734,15 +522,21 @@ export default function HomePage() {
               Take a few moments to reflect.
             </p>
 
-            <div style={{ display: "flex", gap: 16, position: "relative", zIndex: 1, flex: 1 }}>
-              {/* Left: Quote block */}
+            {/* Content row */}
+            <div
+              style={{
+                display: "flex",
+                gap: 16,
+                position: "relative",
+                zIndex: 1,
+                flex: 1,
+                alignItems: "stretch",
+              }}
+            >
+              {/* Quote block */}
               <div
                 style={{
                   flex: 1,
-                  borderRadius: 12,
-                  border: "1px solid rgba(139,124,255,0.15)",
-                  padding: "16px 18px",
-                  background: "rgba(139,124,255,0.03)",
                   display: "flex",
                   flexDirection: "column",
                   gap: 4,
@@ -750,7 +544,7 @@ export default function HomePage() {
               >
                 <span
                   style={{
-                    fontSize: 32,
+                    fontSize: 36,
                     fontWeight: 700,
                     color: "#8B7CFF",
                     lineHeight: 1,
@@ -761,9 +555,9 @@ export default function HomePage() {
                 </span>
                 <p
                   style={{
-                    fontSize: 13.5,
+                    fontSize: 14,
                     fontWeight: 500,
-                    color: "#D9D6FF",
+                    color: "#CCCAFF",
                     lineHeight: 1.6,
                   }}
                 >
@@ -771,68 +565,82 @@ export default function HomePage() {
                 </p>
               </div>
 
-              {/* Right: Book illustration SVG */}
-              <div style={{ width: 170, flexShrink: 0, position: "relative" }}>
+              {/* Right: Book/moon illustration + button */}
+              <div
+                style={{
+                  width: 160,
+                  flexShrink: 0,
+                  position: "relative",
+                  display: "flex",
+                  alignItems: "flex-end",
+                  justifyContent: "flex-end",
+                }}
+              >
                 <svg
-                  viewBox="0 0 170 150"
+                  viewBox="0 0 160 140"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  style={{ width: "100%", height: "100%" }}
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                  }}
                 >
-                  {/* Warm radial glow behind book */}
                   <defs>
-                    <radialGradient id="bookGlow" cx="50%" cy="60%" r="50%">
-                      <stop offset="0%" stopColor="#FFB860" stopOpacity="0.25" />
+                    <radialGradient id="bookGlow2" cx="50%" cy="62%" r="50%">
+                      <stop offset="0%" stopColor="#FFB860" stopOpacity="0.28" />
                       <stop offset="100%" stopColor="#FFB860" stopOpacity="0" />
                     </radialGradient>
                   </defs>
-                  <circle cx="85" cy="90" r="55" fill="url(#bookGlow)" />
+                  <circle cx="80" cy="88" r="52" fill="url(#bookGlow2)" />
 
                   {/* Open book - left page */}
                   <path
-                    d="M45 70 Q47 65 85 67 L85 120 Q47 118 45 113 Z"
+                    d="M40 66 Q42 61 80 63 L80 116 Q42 114 40 109 Z"
                     fill="#3D2E1A"
                     stroke="#6B5030"
                     strokeWidth="0.5"
                   />
-                  <line x1="55" y1="80" x2="80" y2="78" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.6" />
-                  <line x1="55" y1="87" x2="80" y2="85" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.5" />
-                  <line x1="55" y1="94" x2="80" y2="92" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.4" />
-                  <line x1="55" y1="101" x2="75" y2="99" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.3" />
+                  <line x1="50" y1="76" x2="76" y2="74" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.6" />
+                  <line x1="50" y1="83" x2="76" y2="81" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.5" />
+                  <line x1="50" y1="90" x2="76" y2="88" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.4" />
+                  <line x1="50" y1="97" x2="72" y2="95" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.3" />
 
                   {/* Open book - right page */}
                   <path
-                    d="M85 67 Q123 65 125 70 L125 113 Q123 118 85 120 Z"
+                    d="M80 63 Q118 61 120 66 L120 109 Q118 114 80 116 Z"
                     fill="#4A3620"
                     stroke="#6B5030"
                     strokeWidth="0.5"
                   />
-                  <line x1="90" y1="78" x2="120" y2="80" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.6" />
-                  <line x1="90" y1="85" x2="120" y2="87" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.5" />
-                  <line x1="90" y1="92" x2="120" y2="94" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.4" />
-                  <line x1="90" y1="99" x2="115" y2="101" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.3" />
+                  <line x1="85" y1="74" x2="116" y2="76" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.6" />
+                  <line x1="85" y1="81" x2="116" y2="83" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.5" />
+                  <line x1="85" y1="88" x2="116" y2="90" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.4" />
+                  <line x1="85" y1="95" x2="110" y2="97" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.3" />
 
                   {/* Book spine */}
-                  <line x1="85" y1="65" x2="85" y2="121" stroke="#6B5030" strokeWidth="1" />
+                  <line x1="80" y1="61" x2="80" y2="117" stroke="#6B5030" strokeWidth="1" />
 
                   {/* Crescent moon */}
-                  <circle cx="110" cy="32" r="10" fill="#FFC966" />
-                  <circle cx="115" cy="29" r="8" fill="#0F1525" />
+                  <circle cx="106" cy="30" r="10" fill="#FFC966" />
+                  <circle cx="111" cy="27" r="8" fill="#111523" />
 
                   {/* Stars */}
-                  <circle cx="60" cy="28" r="1.5" fill="#FFD166" opacity="0.9" />
-                  <circle cx="60" cy="28" r="3.5" fill="#FFD166" opacity="0.15" />
-                  <circle cx="135" cy="48" r="1" fill="#FFD166" opacity="0.7" />
-                  <circle cx="135" cy="48" r="2.5" fill="#FFD166" opacity="0.1" />
-                  <circle cx="75" cy="18" r="1" fill="#FFD166" opacity="0.8" />
-                  <circle cx="125" cy="22" r="1.2" fill="#FFD166" opacity="0.6" />
-                  <circle cx="50" cy="48" r="0.8" fill="#FFD166" opacity="0.5" />
+                  <circle cx="56" cy="26" r="1.5" fill="#FFD166" opacity="0.9" />
+                  <circle cx="56" cy="26" r="3.5" fill="#FFD166" opacity="0.15" />
+                  <circle cx="130" cy="46" r="1" fill="#FFD166" opacity="0.7" />
+                  <circle cx="130" cy="46" r="2.5" fill="#FFD166" opacity="0.1" />
+                  <circle cx="70" cy="16" r="1" fill="#FFD166" opacity="0.8" />
+                  <circle cx="120" cy="20" r="1.2" fill="#FFD166" opacity="0.6" />
+                  <circle cx="45" cy="46" r="0.8" fill="#FFD166" opacity="0.5" />
 
-                  {/* Plant leaves */}
-                  <path d="M140 150 Q145 125 135 108" fill="none" stroke="#2D5A3D" strokeWidth="1.5" />
-                  <path d="M135 108 Q128 103 122 108 Q128 110 135 108" fill="#2D5A3D" />
-                  <path d="M138 118 Q132 113 128 118 Q132 121 138 118" fill="#3A7050" />
-                  <path d="M142 128 Q148 123 152 126 Q148 130 142 128" fill="#2D5A3D" />
+                  {/* Plant */}
+                  <path d="M135 140 Q140 118 130 104" fill="none" stroke="#2D5A3D" strokeWidth="1.5" />
+                  <path d="M130 104 Q123 99 117 104 Q123 106 130 104" fill="#2D5A3D" />
+                  <path d="M133 114 Q127 109 123 114 Q127 117 133 114" fill="#3A7050" />
+                  <path d="M137 124 Q143 119 147 122 Q143 126 137 124" fill="#2D5A3D" />
                 </svg>
 
                 {/* Write in Journal button */}
@@ -840,25 +648,23 @@ export default function HomePage() {
                   id="write-journal-btn"
                   whileHover={{
                     scale: 1.04,
-                    boxShadow: "0 4px 20px rgba(255,201,102,0.25)",
+                    boxShadow: "0 4px 20px rgba(255,201,102,0.3)",
                   }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => setActiveView("journal")}
                   style={{
-                    position: "absolute",
-                    bottom: 0,
-                    right: 0,
-                    padding: "9px 22px",
+                    position: "relative",
+                    zIndex: 2,
+                    padding: "9px 18px",
                     borderRadius: 99,
-                    fontSize: 13,
-                    fontWeight: 600,
+                    fontSize: 12.5,
+                    fontWeight: 700,
                     background: "#FFC966",
                     border: "none",
                     color: "#0F0F1A",
                     cursor: "pointer",
                     whiteSpace: "nowrap",
                     transition: "all 0.2s",
-                    zIndex: 2,
                   }}
                 >
                   Write in Journal
@@ -868,23 +674,23 @@ export default function HomePage() {
           </motion.div>
         </div>
 
-        {/* ── Disclaimer footer ─────────────────────────────────────── */}
+        {/* ── Footer disclaimer ── */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.72 }}
+          transition={{ delay: 0.65 }}
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             gap: 6,
-            fontSize: 11.5,
-            color: "#485070",
-            paddingTop: 22,
-            paddingBottom: 16,
+            fontSize: 12,
+            color: "#3D4468",
+            paddingTop: 20,
+            paddingBottom: 8,
           }}
         >
-          <Heart size={12} fill="#485070" style={{ opacity: 0.8 }} />
+          <Heart size={12} fill="#3D4468" style={{ opacity: 0.9 }} />
           <span>You matter. Take things one step at a time.</span>
         </motion.p>
       </div>

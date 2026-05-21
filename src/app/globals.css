@@ -40,7 +40,7 @@ html, body {
 }
 
 body {
-  background: linear-gradient(135deg, #050816 0%, #0B1330 45%, #161F3F 100%);
+  background: #111523;
   color: var(--text-primary);
   font-family: 'Inter', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
