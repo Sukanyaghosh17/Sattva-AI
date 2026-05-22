@@ -616,6 +616,7 @@ export default function HomePage() {
             {/* Dotted wave SVG background */}
             <svg
               viewBox="0 0 400 80"
+              preserveAspectRatio="none"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
               style={{
@@ -646,12 +647,19 @@ export default function HomePage() {
                 d="M0 60 Q50 30 100 45 T200 25 T300 50 T400 35 L400 80 L0 80 Z"
                 fill="url(#waveFill)"
               />
+              {/* Left endpoint */}
+              <circle cx="0" cy="60" r="3" fill="#8B7CFF" opacity="0.8" />
+              <circle cx="0" cy="60" r="6" fill="#8B7CFF" opacity="0.15" />
+              {/* Mid points */}
               <circle cx="100" cy="45" r="3" fill="#8B7CFF" opacity="0.8" />
               <circle cx="100" cy="45" r="6" fill="#8B7CFF" opacity="0.15" />
               <circle cx="200" cy="25" r="3" fill="#8B7CFF" opacity="0.8" />
               <circle cx="200" cy="25" r="6" fill="#8B7CFF" opacity="0.15" />
               <circle cx="300" cy="50" r="3" fill="#8B7CFF" opacity="0.8" />
               <circle cx="300" cy="50" r="6" fill="#8B7CFF" opacity="0.15" />
+              {/* Right endpoint */}
+              <circle cx="400" cy="35" r="3" fill="#8B7CFF" opacity="0.8" />
+              <circle cx="400" cy="35" r="6" fill="#8B7CFF" opacity="0.15" />
             </svg>
           </motion.div>
 
@@ -727,8 +735,6 @@ export default function HomePage() {
                 fontSize: 12.5,
                 color: "#7E86A8",
                 marginBottom: 16,
-                position: "relative",
-                zIndex: 1,
               }}
             >
               Take a few moments to reflect.
@@ -771,69 +777,20 @@ export default function HomePage() {
                 </p>
               </div>
 
-              {/* Right: Book illustration SVG */}
-              <div style={{ width: 170, flexShrink: 0, position: "relative" }}>
-                <svg
-                  viewBox="0 0 170 150"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  style={{ width: "100%", height: "100%" }}
-                >
-                  {/* Warm radial glow behind book */}
-                  <defs>
-                    <radialGradient id="bookGlow" cx="50%" cy="60%" r="50%">
-                      <stop offset="0%" stopColor="#FFB860" stopOpacity="0.25" />
-                      <stop offset="100%" stopColor="#FFB860" stopOpacity="0" />
-                    </radialGradient>
-                  </defs>
-                  <circle cx="85" cy="90" r="55" fill="url(#bookGlow)" />
-
-                  {/* Open book - left page */}
-                  <path
-                    d="M45 70 Q47 65 85 67 L85 120 Q47 118 45 113 Z"
-                    fill="#3D2E1A"
-                    stroke="#6B5030"
-                    strokeWidth="0.5"
-                  />
-                  <line x1="55" y1="80" x2="80" y2="78" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.6" />
-                  <line x1="55" y1="87" x2="80" y2="85" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.5" />
-                  <line x1="55" y1="94" x2="80" y2="92" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.4" />
-                  <line x1="55" y1="101" x2="75" y2="99" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.3" />
-
-                  {/* Open book - right page */}
-                  <path
-                    d="M85 67 Q123 65 125 70 L125 113 Q123 118 85 120 Z"
-                    fill="#4A3620"
-                    stroke="#6B5030"
-                    strokeWidth="0.5"
-                  />
-                  <line x1="90" y1="78" x2="120" y2="80" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.6" />
-                  <line x1="90" y1="85" x2="120" y2="87" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.5" />
-                  <line x1="90" y1="92" x2="120" y2="94" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.4" />
-                  <line x1="90" y1="99" x2="115" y2="101" stroke="#8B7040" strokeWidth="0.5" strokeOpacity="0.3" />
-
-                  {/* Book spine */}
-                  <line x1="85" y1="65" x2="85" y2="121" stroke="#6B5030" strokeWidth="1" />
-
-                  {/* Crescent moon */}
-                  <circle cx="110" cy="32" r="10" fill="#FFC966" />
-                  <circle cx="115" cy="29" r="8" fill="#0F1525" />
-
-                  {/* Stars */}
-                  <circle cx="60" cy="28" r="1.5" fill="#FFD166" opacity="0.9" />
-                  <circle cx="60" cy="28" r="3.5" fill="#FFD166" opacity="0.15" />
-                  <circle cx="135" cy="48" r="1" fill="#FFD166" opacity="0.7" />
-                  <circle cx="135" cy="48" r="2.5" fill="#FFD166" opacity="0.1" />
-                  <circle cx="75" cy="18" r="1" fill="#FFD166" opacity="0.8" />
-                  <circle cx="125" cy="22" r="1.2" fill="#FFD166" opacity="0.6" />
-                  <circle cx="50" cy="48" r="0.8" fill="#FFD166" opacity="0.5" />
-
-                  {/* Plant leaves */}
-                  <path d="M140 150 Q145 125 135 108" fill="none" stroke="#2D5A3D" strokeWidth="1.5" />
-                  <path d="M135 108 Q128 103 122 108 Q128 110 135 108" fill="#2D5A3D" />
-                  <path d="M138 118 Q132 113 128 118 Q132 121 138 118" fill="#3A7050" />
-                  <path d="M142 128 Q148 123 152 126 Q148 130 142 128" fill="#2D5A3D" />
-                </svg>
+              {/* Right: Book illustration */}
+              <div style={{ width: 190, flexShrink: 0, position: "relative", display: "flex", flexDirection: "column", justifyContent: "space-between", minHeight: 150 }}>
+                <img
+                  src="/book.png"
+                  alt="Journal book"
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    maxHeight: 115,
+                    objectFit: "contain",
+                    filter: "drop-shadow(0 8px 24px rgba(255,209,102,0.15))",
+                    marginTop: -10,
+                  }}
+                />
 
                 {/* Write in Journal button */}
                 <motion.button
