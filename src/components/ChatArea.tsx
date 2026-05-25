@@ -7,6 +7,7 @@ import MessageBubble from "./MessageBubble";
 import TypingIndicator from "./TypingIndicator";
 import ChatInput from "./ChatInput";
 import CrisisBanner from "./CrisisBanner";
+import NewChatWelcomeView from "./NewChatWelcomeView";
 
 export default function ChatArea() {
   const {
@@ -94,6 +95,11 @@ export default function ChatArea() {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeSessionId]);
+
+  /* ── If there are no messages, show the new-chat welcome screen ── */
+  if (messages.length === 0) {
+    return <NewChatWelcomeView onSend={sendMessage} disabled={isStreaming} />;
+  }
 
   return (
     <div className="flex flex-col h-full relative">

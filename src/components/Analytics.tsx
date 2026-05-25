@@ -10,9 +10,7 @@ const MOOD_COLORS: Record<MoodType, string> = {
   happy: "#ffd89b", calm: "#a8edea", neutral: "#9097C0", anxious: "#fc8181", sad: "#818cf8",
 };
 
-const MOOD_SCORES: Record<MoodType, number> = {
-  happy: 9, calm: 8, neutral: 5, anxious: 3, sad: 2,
-};
+
 
 export default function Analytics() {
   const { moodEntries, sessions, journalEntries, streak } = useChatStore();
@@ -28,6 +26,7 @@ export default function Analytics() {
     return { date, avgScore, entries: dayEntries };
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const maxScore = Math.max(...last7Days.map((d) => d.avgScore ?? 0), 1);
   const totalSessions = sessions.length;
   const totalMessages = sessions.reduce((a, s) => a + s.messages.length, 0);

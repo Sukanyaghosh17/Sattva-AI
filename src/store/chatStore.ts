@@ -76,11 +76,27 @@ interface ChatStore {
 export const useChatStore = create<ChatStore>()(
   persist(
     (set, get) => ({
-      sessions: [],
+      sessions: (() => {
+        const now   = new Date();
+        const ago   = (days: number, h = 0) => {
+          const d = new Date(now);
+          d.setDate(d.getDate() - days);
+          d.setHours(d.getHours() - h);
+          return d;
+        };
+        return [
+          { id: "demo-1", title: "Welcome Chat",         messages: [], createdAt: ago(0,1), updatedAt: ago(0,1), pinned: false },
+          { id: "demo-2", title: "Stress & Anxiety",     messages: [], createdAt: ago(1),   updatedAt: ago(1),   pinned: false },
+          { id: "demo-3", title: "Sleep Improvement Tips",messages:[],createdAt: ago(1,2),  updatedAt: ago(1,2), pinned: false },
+          { id: "demo-4", title: "Morning Meditation",   messages: [], createdAt: ago(2),   updatedAt: ago(2),   pinned: false },
+          { id: "demo-5", title: "Gratitude Practice",   messages: [], createdAt: ago(3),   updatedAt: ago(3),   pinned: false },
+          { id: "demo-6", title: "Inner Peace",          messages: [], createdAt: ago(4),   updatedAt: ago(4),   pinned: false },
+        ];
+      })(),
       activeSessionId: null,
       activeView: "chat",
       sidebarOpen: true,
-      sidebarWidth: 320,
+      sidebarWidth: 260,
       searchQuery: "",
       isStreaming: false,
       moodEntries: [],
@@ -250,6 +266,7 @@ export const useChatStore = create<ChatStore>()(
     }),
     {
       name: "sattav-ai-store",
+      version: 2,
       partialize: (state) => ({
         sessions: state.sessions,
         activeSessionId: state.activeSessionId,

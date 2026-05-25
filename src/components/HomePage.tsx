@@ -354,6 +354,7 @@ export default function HomePage() {
             className="hidden lg:block"
             style={{ flexShrink: 0, width: 320, marginTop: 12 }}
           >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/meditation_robot.png"
               alt="Sattav AI meditation companion"
@@ -779,6 +780,7 @@ export default function HomePage() {
 
               {/* Right: Book illustration */}
               <div style={{ width: 190, flexShrink: 0, position: "relative", display: "flex", flexDirection: "column", justifyContent: "space-between", minHeight: 150 }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/book.png"
                   alt="Journal book"

@@ -27,6 +27,7 @@ export default function Logo({
         animate={animate ? { scale: [1, 1.03, 1] } : {}}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/logo.png"
           alt="Sattav AI Logo"

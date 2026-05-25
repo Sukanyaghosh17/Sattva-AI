@@ -1,104 +1,49 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useChatStore } from "@/store/chatStore";
-import Logo from "./Logo";
-import { Plus, Bell } from "lucide-react";
-import { useSyncExternalStore } from "react";
+import { Bell, Sun } from "lucide-react";
 
 export default function TopBar() {
-  const {
-    activeView, sidebarOpen, activeSessionId,
-    createNewSession, setActiveSession, setActiveView,
-    getActiveSession,
-  } = useChatStore();
-  const mounted = useSyncExternalStore(
-    () => () => {},
-    () => true,
-    () => false
-  );
-
-  const isHomePage = activeView === "chat" && !activeSessionId;
-
-  const VIEW_TITLES: Record<string, string> = {
-    chat:      "Chat",
-    mood:      "Mood Tracker",
-    journal:   "AI Journal",
-    meditate:  "Meditation & Breathing",
-    analytics: "Wellness Analytics",
-  };
 
   return (
     <header
-      className="flex items-center justify-between flex-shrink-0"
+      className="flex items-center justify-end flex-shrink-0"
       style={{
         padding: "0 20px",
         height: 56,
-        borderBottom: isHomePage ? "none" : "1px solid rgba(139,124,255,0.07)",
-        background: isHomePage ? "transparent" : "rgba(6,8,22,0.45)",
-        backdropFilter: isHomePage ? "none" : "blur(20px)",
-        WebkitBackdropFilter: isHomePage ? "none" : "blur(20px)",
-        position: isHomePage ? "absolute" : "relative",
-        top: 0,
-        left: 0,
-        right: 0,
+        background: "transparent",
+        position: "relative",
         zIndex: 20,
       }}
     >
-      {/* Left: Logo or page title */}
-      <div className="flex items-center gap-4">
-        {mounted && !sidebarOpen && <Logo size="sm" animate />}
-        {mounted && sidebarOpen && activeView !== "chat" && (
-          <motion.h1
-            key={activeView}
-            initial={{ opacity: 0, y: -4 }}
-            animate={{ opacity: 1, y: 0 }}
-            style={{
-              fontSize: 15,
-              fontWeight: 600,
-              color: "#D9D6FF",
-              fontFamily: "'Outfit', sans-serif",
-            }}
-          >
-            {VIEW_TITLES[activeView]}
-          </motion.h1>
-        )}
-      </div>
-
-      {/* Right: actions */}
+      {/* Right: action icons */}
       <div className="flex items-center gap-2">
-        {/* + New Chat pill button */}
+        {/* Sun / theme toggle */}
         <motion.button
-          onClick={() => {
-            const id = createNewSession();
-            setActiveSession(id);
-            setActiveView("chat");
-          }}
-          whileHover={{
-            scale: 1.03,
-            boxShadow: "0 4px 20px rgba(139,124,255,0.25)",
-          }}
-          whileTap={{ scale: 0.97 }}
-          className="flex items-center gap-1.5"
+          whileHover={{ scale: 1.08, rotate: 20 }}
+          whileTap={{ scale: 0.93 }}
           style={{
-            padding: "7px 16px",
+            width: 36,
+            height: 36,
             borderRadius: 10,
-            fontSize: 13,
-            fontWeight: 600,
-            background: "rgba(139,124,255,0.12)",
-            border: "1px solid rgba(139,124,255,0.22)",
-            color: "#D9D6FF",
+            background: "rgba(255,255,255,0.04)",
+            border: "1px solid rgba(255,255,255,0.07)",
+            color: "#6a72a0",
             cursor: "pointer",
-            transition: "all 0.2s",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            transition: "color 0.2s",
           }}
+          title="Toggle theme"
         >
-          <Plus size={14} strokeWidth={2.5} />
-          New Chat
+          <Sun size={16} strokeWidth={1.8} />
         </motion.button>
 
-        {/* Bell */}
+        {/* Bell with notification dot */}
         <motion.button
           whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           className="relative flex items-center justify-center"
           style={{
             width: 36,
@@ -109,21 +54,48 @@ export default function TopBar() {
             color: "#6a72a0",
             cursor: "pointer",
           }}
+          title="Notifications"
         >
           <Bell size={16} strokeWidth={1.8} />
-          {/* Notification dot */}
+          {/* Purple notification dot */}
           <span
             className="absolute"
             style={{
-              width: 6,
-              height: 6,
+              width: 7,
+              height: 7,
               borderRadius: "50%",
               background: "#8B7CFF",
-              top: 8,
-              right: 8,
-              boxShadow: "0 0 4px rgba(139,124,255,0.7)",
+              top: 7,
+              right: 7,
+              border: "1.5px solid #0B0F2A",
+              boxShadow: "0 0 5px rgba(139,124,255,0.8)",
             }}
           />
+        </motion.button>
+
+        {/* Avatar */}
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          style={{
+            width: 36,
+            height: 36,
+            borderRadius: "50%",
+            background: "linear-gradient(140deg, #5540c8 0%, #7B61FF 100%)",
+            border: "2px solid rgba(139,124,255,0.35)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 14,
+            fontWeight: 700,
+            color: "#fff",
+            cursor: "pointer",
+            boxShadow: "0 2px 10px rgba(123,97,255,0.35)",
+            fontFamily: "'Outfit', sans-serif",
+          }}
+          title="Profile"
+        >
+          N
         </motion.button>
       </div>
     </header>

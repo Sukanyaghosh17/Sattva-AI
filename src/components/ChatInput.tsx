@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, Mic, MicOff, Paperclip, Smile, Sparkles } from "lucide-react";
+import { Send, Mic, MicOff, Smile, Sparkles } from "lucide-react";
 
 interface ChatInputProps {
   onSend: (message: string) => void;
@@ -22,7 +22,7 @@ export default function ChatInput({ onSend, disabled, placeholder }: ChatInputPr
   const [value, setValue] = useState("");
   const [isRecording, setIsRecording] = useState(false);
   const [showQuickPrompts, setShowQuickPrompts] = useState(false);
-  const [rows, setRows] = useState(1);
+
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const maxRows = 6;

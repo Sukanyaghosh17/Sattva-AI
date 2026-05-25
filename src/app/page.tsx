@@ -25,7 +25,7 @@ export default function Home() {
   const showHomePage = activeView === "chat" && !activeSessionId;
 
   return (
-    <div className="relative flex h-screen overflow-hidden" style={{ background: "linear-gradient(135deg, #050816 0%, #0B1330 45%, #161F3F 100%)" }}>
+    <div className="relative flex h-screen overflow-hidden" style={{ background: "#0B0F2A" }}>
       {/* Sidebar */}
       <Sidebar />
 

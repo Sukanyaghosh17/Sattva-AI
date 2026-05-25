@@ -88,7 +88,7 @@ export default function MessageBubble({ message, onRegenerate, isLast }: Message
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
                   components={{
-                    code({ node, className, children, ...props }) {
+                    code({ className, children, ...props }) {
                       const match = /language-(\w+)/.exec(className || "");
                       const isBlock = className?.includes("language-");
                       return isBlock ? (
